@@ -104,7 +104,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
     if (!in_array(get_woocommerce_currency(), array('USD','BRL','COP','MXN','PEN'))){
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             $currency = __('payU Latam SDK: Requires one of these currencies USD, BRL, COP, MXN, PEN ', 'woo-payu-latam-sdk' )
-                . sprintf(__('%s', 'woo-payu-latam-sdk' ), '<a href="' . admin_url()
+                . sprintf('%s', '<a href="' . admin_url()
                     . 'admin.php?page=wc-settings&tab=general#s2id_woocommerce_currency">'
                     . __('Click here to configure', 'woo-payu-latam-sdk') . '</a>' );
             add_action('admin_notices', function() use($currency) {
@@ -120,7 +120,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             $country = __('payU Latam SDK: It requires that the country of the store be some of these countries
              Argentina, Brazil, Colombia, Mexico, Panama and Peru ', 'woo-payu-latam-sdk' )
-                . sprintf(__('%s', 'woo-payu-latam-sdk' ), '<a href="' . admin_url()
+                . sprintf('%s', '<a href="' . admin_url()
                     . 'admin.php?page=wc-settings&tab=general#s2id_woocommerce_currency">'
                     .  __('Click here to configure', 'woo-payu-latam-sdk') . '</a>' );
             add_action('admin_notices', function() use($country) {
@@ -137,14 +137,12 @@ function requeriments_woo_payu_latam_sdk_pls(){
         )){
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             $fieldsbrazil = __('payU Latam SDK: the plugin is required ', 'woo-payu-latam-sdk' )
-                . sprintf(__('%s', 'woo-payu-latam-sdk' ),
+                . sprintf('%s',
                     '<a href="https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/">'
                     . __('WooCommerce Extra Checkout Fields for Brazil', 'woo-payu-latam-sdk') . '</a>' );
-            if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
-                add_action('admin_notices', function() use($fieldsbrazil) {
-                    woo_payu_subscriptions_reports_notices($fieldsbrazil);
-                });
-            }
+            add_action('admin_notices', function() use($fieldsbrazil) {
+                woo_payu_subscriptions_reports_notices($fieldsbrazil);
+            });
         }
         return false;
     }
