@@ -161,3 +161,37 @@ function woo_payu_latam_sdk_pls(){
     }
     return $plugin;
 }
+
+function activate_payu_latam_sdk_pls(){
+
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . "payu_latam_sdk_pls_transactions";
+    $charset_collate = $wpdb->get_charset_collate();
+
+    $sql = "CREATE TABLE $table_name (
+		id mediumint(9) NOT NULL AUTO_INCREMENT,
+		orderid int NOT NULL,
+		transactionid varchar(60) DEFAULT '' NOT NULL,
+		PRIMARY KEY  (id)
+	) $charset_collate;";
+
+    require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
+    dbDelta( $sql );
+    update_option('payu_latam_sdk_pls_version',WOO_PAYU_LATAM_SDK_PLS_VERSION);
+    wp_schedule_event( time(), 'hourly', 'payu_latam_sdk_pls' );
+}
+
+function deactivation_payu_latam_sdk_pls(){
+
+    global $wpdb;
+
+    $table_name = $wpdb->prefix . "payu_latam_sdk_pls_transactions";
+    $sql = "DROP TABLE IF EXISTS $table_name";
+    $wpdb->query($sql);
+    delete_option('payu_latam_sdk_pls_version');
+    wp_clear_scheduled_hook( 'payu_latam_sdk_pls' );
+}
+
+register_activation_hook(__FILE__,'activate_payu_latam_sdk_pls');
+register_deactivation_hook( __FILE__, 'deactivation_payu_latam_sdk_pls' );

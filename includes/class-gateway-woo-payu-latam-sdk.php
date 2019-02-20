@@ -80,11 +80,11 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
             <div class='card-wrapper'></div>
             <div id="form-payu-latam-sdk">
                 <label for="number" class="label"><?php echo __('Data of card','woo-payu-latam-sdk'); ?> *</label>
-                <input placeholder="<?php echo __('Card number','woo-payu-latam-sdk'); ?>" type="number" name="payu-latam-sdk-number" id="payu-latam-sdk-number" required="" class="form-control">
+                <input placeholder="<?php echo __('Card number','woo-payu-latam-sdk'); ?>" type="text" name="payu-latam-sdk-number" id="payu-latam-sdk-number" required="" class="form-control">
                 <input placeholder="<?php echo __('Cardholder','woo-payu-latam-sdk'); ?>" type="text" name="payu-latam-sdk-name" id="payu-latam-sdk-name" required="" class="form-control">
                 <input type="hidden" name="payu-latam-sdk-type" id="payu-latam-sdk-type">
                 <input placeholder="MM/YY" type="tel" name="payu-latam-sdk-expiry" id="payu-latam-sdk-expiry" required="" class="form-control" >
-                <input placeholder="123" type="number" name="payu-latam-sdk-cvc" id="payu-latam-sdk-cvc" required="" class="form-control" maxlength="4">
+                <input placeholder="123" type="text" name="payu-latam-sdk-cvc" id="payu-latam-sdk-cvc" required="" class="form-control" maxlength="4">
             </div>
         </div>
         <?php
@@ -92,7 +92,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
 
     public function validate_fields()
     {
-        if (isset($_POST['subscriptionpayulatam_errorcard'])){
+        if (isset($_POST['payu-latam-sdk-errorcard'])){
             wc_add_notice($_POST['payu-latam-sdk-errorcard'], 'error' );
             return false;
         }
@@ -107,7 +107,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $params['id_order'] = $order_id;
 
         $payment = new Payu_Latam_SDK_PLS();
-        $data = $payment->executePayment($params);
+        $data = $payment->executePayment($params, false);
 
         if($data['status']){
             wc_reduce_stock_levels($order_id);

@@ -51,12 +51,12 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         if ($country === 'PE')
             $countryName = PayUCountries::PE;
 
-        if (isset($params)){
+        if (!empty($params)){
+
+            $order_id    = $params['id_order'];
+            $order       = new WC_Order($order_id);
 
             $params = $this->prepareDataCard($params);
-
-            $order_id    = $params['order_id'];
-            $order       = new WC_Order($order_id);
             $card_number = $params['card_number'];
             $card_name   = $params['card_name'];
             $card_type   = $params['card_type'];
@@ -162,7 +162,58 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         }
 
         try{
-            PayUPayments::doAuthorizationAndCapture($parameters);
+            $response = PayUPayments::doAuthorizationAndCapture($parameters);
+
+            if (!$test){
+
+                $aprovved = false;
+                $redirect_url  = '';
+
+                if ($response->transactionResponse->state == "APPROVED") {
+                    $aprovved   = true;
+                    $transactionId = $response->transactionResponse->transactionId;
+                    $order->payment_complete($transactionId);
+                    $order->add_order_note(sprintf(__('Successful payment (Transaction ID: %s)',
+                        'suscription-payu-latam'), $transactionId));
+                    $message   = sprintf(__('Successful payment (Transaction ID: %s)', 'woo-payu-latam-sdk'),
+                        $transactionId);
+                    $messageClass  = 'woocommerce-message';
+                    $redirect_url = add_query_arg( array('msg'=> urlencode($message), 'type'=> $messageClass), $order->get_checkout_order_received_url() );
+                } elseif ($response->transactionResponse->state == "PENDING") {
+                    $transactionId = $response->transactionResponse->transactionId;
+                    $this->saveTransactionId($order_id, $transactionId);
+                    $message       = sprintf(__('Payment pending (Transaction ID: %s)', 'woo-payu-latam-sdk'),
+                        $transactionId);
+                    $messageClass  = 'woocommerce-info';
+                    $order->update_status('on-hold');
+                    $order->add_order_note(sprintf(__('Pending approval (Transaction ID: %s)',
+                        'woo-payu-latam-sdk'), $transactionId));
+                    $redirect_url = add_query_arg(array('msg' => urlencode($message), 'type' => $messageClass),
+                        $order->get_checkout_order_received_url());
+                } elseif ($response->transactionResponse->state == "DECLINED") {
+                    $transactionId = $response->transactionResponse->transactionId;
+                    $message   = __('Payment declined', 'woo-payu-latam-sdk');
+                    $messageClass  = 'woocommerce-error';
+                    $order->update_status('failed');
+                    $order->add_order_note(sprintf(__('Payment declined (Transaction ID: %s)',
+                        'woo-payu-latam-sdk'), $transactionId));
+                    $redirect_url = add_query_arg(array('msg' => urlencode($message), 'type' => $messageClass),
+                        $order->get_checkout_order_received_url());
+                } elseif ($response->transactionResponse->state == "EXPIRED") {
+                    $transactionId = $response->transactionResponse->transactionId;
+                    $message       = __('Payment expired', 'woo-payu-latam-sdk');
+                    $messageClass  = 'woocommerce-error';
+                    $order->update_status('failed');
+                    $order->add_order_note(sprintf(__('Payment expired (Transaction ID: %s)', 'woo-payu-latam-sdk'),
+                        $transactionId));
+                    $redirect_url = add_query_arg(array('msg' => urlencode($message), 'type' => $messageClass),
+                        $order->get_checkout_order_received_url());
+                }
+
+                return array('status' => $aprovved, 'url' => $redirect_url);
+
+            }
+
         }catch (PayUException $ex){
             if($test){
                 woo_payu_latam_sdk_pls()->log($ex->getMessage());
@@ -232,6 +283,21 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         );
 
         return $data;
+    }
+
+    public function saveTransactionId($order_id, $transactionId)
+    {
+        global $wpdb;
+        $table_name = $wpdb->prefix . 'payu_latam_sdk_pls_transactions';
+
+        $wpdb->insert(
+            $table_name,
+            array(
+                'orderid' => $order_id,
+                'transactionid' => $transactionId,
+            )
+        );
+
     }
 
 }
