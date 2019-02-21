@@ -69,7 +69,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
                 $this->test_payu_latam_sdk();
             }else{
                 $emptyFields = __('Could not perform any tests, because you have not entered all the required fields', 'woo-payu-latam-sdk');
-                woo_payu_subscriptions_reports_notices($emptyFields);
+                woo_payu_latam_sdk_pls_notices($emptyFields);
             }
             $this->generate_settings_html();
             ?>
@@ -93,6 +93,14 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
                 <input type="hidden" name="payu-latam-sdk-type" id="payu-latam-sdk-type">
                 <input placeholder="MM/YY" type="tel" name="payu-latam-sdk-expiry" id="payu-latam-sdk-expiry" required="" class="form-control" >
                 <input placeholder="123" type="text" name="payu-latam-sdk-cvc" id="payu-latam-sdk-cvc" required="" class="form-control" maxlength="4">
+                <?php if((int)$this->installments > 1):  ?>
+                    <select name="payu-latam-sdk-installments" id="payu-latam-sdk-installments">
+                        <option value="" selected>cantidad de cuotas</option>
+                    <?php for ($i = 1; $i <= $this->installments; $i++): ?>
+                        <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                    <?php endfor; ?>
+                    </select>
+                <?php endif; ?>
             </div>
         </div>
         <?php

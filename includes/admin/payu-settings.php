@@ -90,7 +90,7 @@ return array(
     'installments_number'          => array(
         'title'       => __( 'Installments number', 'woo-payu-latam-sdk'),
         'type'        => 'title',
-        'description' => __('The number of installments to be divided the payment, by default is set in an installment', 'woo-payu-latam-sdk'),
+        'description' => __('The maximum number of installments that the user can select', 'woo-payu-latam-sdk'),
     ),
     'installments' => array(
         'title' => __('Installments', 'woo-payu-latam-sdk'),

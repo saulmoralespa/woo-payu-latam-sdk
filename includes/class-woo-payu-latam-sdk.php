@@ -55,12 +55,12 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             $order_id    = $params['id_order'];
             $order       = new WC_Order($order_id);
 
-            $params = $this->prepareDataCard($params);
-            $card_number = $params['card_number'];
-            $card_name   = $params['card_name'];
-            $card_type   = $params['card_type'];
-            $card_expire = $params['card_expire'];
-            $cvc         = $params['cvc'];
+            $parametersCard = $this->prepareDataCard($params);
+            $card_number = $parametersCard['card_number'];
+            $card_name   = $parametersCard['card_name'];
+            $card_type   = $parametersCard['card_type'];
+            $card_expire = $parametersCard['card_expire'];
+            $cvc         = $parametersCard['cvc'];
             $reference = $order->get_order_key() . '-' . time();
             $total = $order->get_total();
             $productinfo = "Order $order_id";
@@ -125,7 +125,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             //VISA||MASTERCARD||AMEX||DINERS
             PayUParameters::PAYMENT_METHOD => $card_type,
             //Ingrese aquí el número de cuotas.
-            PayUParameters::INSTALLMENTS_NUMBER => $this->installments,
+            PayUParameters::INSTALLMENTS_NUMBER => isset($params['payu-latam-sdk-installments']) ? $params['payu-latam-sdk-installments'] : $this->installments,
             //Ingrese aquí el nombre del pais.
             PayUParameters::COUNTRY => $countryName,
             //IP del pagadador

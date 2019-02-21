@@ -148,7 +148,8 @@ class Woo_Payu_Latam_SDK_Plugin
                 'msjNoCard' => __('The type of card is not accepted','woo-payu-latam-sdk'),
                 'msjEmptyInputs' => __('Enter the card information','woo-payu-latam-sdk'),
                 'msjProcess' => __('Please wait...','woo-payu-latam-sdk'),
-                'msjReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk')
+                'msjReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk'),
+                'msjNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk')
             ) );
         }
     }
