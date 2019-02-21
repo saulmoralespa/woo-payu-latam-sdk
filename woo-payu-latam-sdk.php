@@ -49,7 +49,6 @@ function requeriments_woo_payu_latam_sdk_pls(){
     if ( version_compare( '5.6.0', PHP_VERSION, '>' ) ) {
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             $php = __('payU Latam SDK: Requires php version 5.6.0 or higher', 'woo-payu-latam-sdk');
-
             add_action('admin_notices', function() use($php) {
                 woo_payu_subscriptions_reports_notices($php);
             });

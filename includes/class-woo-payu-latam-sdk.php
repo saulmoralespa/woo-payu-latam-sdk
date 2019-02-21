@@ -11,7 +11,6 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
     public function __construct()
     {
         parent::__construct();
-        require_once (woo_payu_latam_sdk_pls()->plugin_path . 'lib/PayU.php');
     }
 
     public function executePayment(array $params = array(), $test = true)
@@ -80,8 +79,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         PayU::$merchantId = $this->merchant_id;
         PayU::$language = $lang;
         PayU::$isTest = ($test) ? true : $this->isTest;
-        Environment::setPaymentsCustomUrl($this->createUrl());
-        Environment::setReportsCustomUrl($this->createUrl(true));
+        $urlPayment = woo_payu_latam_sdk_pls()->createUrl($this->isTest);
+        Environment::setPaymentsCustomUrl($urlPayment);
 
         $parameters = array(
             //Ingrese aquí el identificador de la cuenta.
@@ -126,7 +125,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             //VISA||MASTERCARD||AMEX||DINERS
             PayUParameters::PAYMENT_METHOD => $card_type,
             //Ingrese aquí el número de cuotas.
-            PayUParameters::INSTALLMENTS_NUMBER => "1",
+            PayUParameters::INSTALLMENTS_NUMBER => $this->installments,
             //Ingrese aquí el nombre del pais.
             PayUParameters::COUNTRY => $countryName,
             //IP del pagadador
@@ -228,23 +227,6 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         }
 
         return array('status' => false, 'message' => __('Not processed payment'));
-    }
-
-
-    public function createUrl($reports = false)
-    {
-        if ($this->isTest){
-            $url = "https://sandbox.api.payulatam.com/";
-        }else{
-            $url = "https://api.payulatam.com/";
-        }
-        if ($reports){
-            $url .= 'reports-api/4.0/service.cgi';
-        }
-        else{
-            $url .= 'payments-api/4.0/service.cgi';
-        }
-        return $url;
     }
 
 

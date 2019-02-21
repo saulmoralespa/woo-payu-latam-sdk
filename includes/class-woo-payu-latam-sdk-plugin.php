@@ -89,6 +89,7 @@ class Woo_Payu_Latam_SDK_Plugin
     {
         require_once ($this->includes_path . 'class-gateway-woo-payu-latam-sdk.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk.php');
+        require_once ($this->lib_path . 'PayU.php');
 
         add_filter( 'plugin_action_links_' . plugin_basename( $this->file), array( $this, 'plugin_action_links' ) );
         add_filter( 'woocommerce_payment_gateways', array($this, 'woocommerce_payu_latam_sdk_add_gateway'));
@@ -168,6 +169,35 @@ class Woo_Payu_Latam_SDK_Plugin
         $rows = $wpdb->get_results( "SELECT id,orderid,transactionid FROM $table_name" );
         if (empty($rows))
             return;
+
+        $payu_latam_sdk = new WC_Payment_Payu_Latam_SDK_PLS();
+
+        foreach ($rows as $row) {
+            $state = $payu_latam_sdk->getStatusTransaction($row->transactionid);
+
+            $order = new WC_Order($row->orderid);
+
+            if (isset($state) && $order !== false && $state !== 'PENDING'){
+
+                if ($state === 'APPROVED'){
+                    $order->payment_complete($row->transactionid);
+                    $order->add_order_note(sprintf(__('Successful payment (Transaction ID: %s)',
+                        'subscription-payu-latam'), $row->transactionid));
+                }elseif ($state === 'DECLINED'){
+                    $order->add_order_note(sprintf(__('Payment declined (Transaction ID: %s)',
+                        'woo-payu-latam-sdk'), $row->transactionid));
+                }else{
+                    $order->update_status('failed');
+                    $order->add_order_note(sprintf(__('Payment expired (Transaction ID: %s)', 'woo-payu-latam-sdk')));
+                }
+                $query = "DELETE FROM $table_name WHERE orderid = '$row->orderid'";
+                $wpdb->query($query);
+            }else{
+                break;
+            }
+
+        }
+
     }
 
     public function get_available_payment()
@@ -175,6 +205,22 @@ class Woo_Payu_Latam_SDK_Plugin
         $activated_ones = array_keys( WC()->payment_gateways->get_available_payment_gateways() );
 
         return in_array( 'payu_latam_sdk_pls', $activated_ones );
+    }
+
+    public function createUrl($test, $reports = false)
+    {
+        if ($test){
+            $url = "https://sandbox.api.payulatam.com/";
+        }else{
+            $url = "https://api.payulatam.com/";
+        }
+        if ($reports){
+            $url .= 'reports-api/4.0/service.cgi';
+        }
+        else{
+            $url .= 'payments-api/4.0/service.cgi';
+        }
+        return $url;
     }
 
 }

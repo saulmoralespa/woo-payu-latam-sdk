@@ -6,6 +6,8 @@
  * Time: 09:04 AM
  */
 
+$credentials = '<a target="_blank" href="' . esc_url('http://developers.payulatam.com/es/sdk/sandbox.html') . '">' . __( 'For tests use the credentials provided by payU latam', 'woo-payu-latam-sdk' ) . '</a>';
+
 return array(
     'enabled' => array(
         'title' => __('Enable/Disable', 'woo-payu-latam-sdk'),
@@ -33,6 +35,11 @@ return array(
         'label' => __('Debug records, it is saved in payment log', 'woo-payu-latam-sdk'),
         'default' => 'no'
     ),
+    'callback'          => array(
+        'title'       => __( 'confirmation url', 'woo-payu-latam-sdk'),
+        'type'        => 'title',
+        'description' => trailingslashit(get_bloginfo( 'url' )) . trailingslashit('wc-api') . "wc_payment_payu_latam_sdk_pls",
+    ),
     'environment' => array(
         'title' => __('Environment', 'woo-payu-latam-sdk'),
         'type'        => 'select',
@@ -44,6 +51,11 @@ return array(
             false    => __( 'Production', 'woo-payu-latam-sdk' ),
             true => __( 'Test', 'woo-payu-latam-sdk' ),
         ),
+    ),
+    'api'          => array(
+        'title'       => __( 'Credentials', 'woo-payu-latam-sdk'),
+        'type'        => 'title',
+        'description' => $credentials,
     ),
     'merchant_id' => array(
         'title' => __('Merchant id', 'woo-payu-latam-sdk'),
@@ -74,5 +86,15 @@ return array(
         'default' => '',
         'desc_tip' => true,
         'placeholder' => ''
+    ),
+    'installments_number'          => array(
+        'title'       => __( 'Installments number', 'woo-payu-latam-sdk'),
+        'type'        => 'title',
+        'description' => __('The number of installments to be divided the payment, by default is set in an installment', 'woo-payu-latam-sdk'),
+    ),
+    'installments' => array(
+        'title' => __('Installments', 'woo-payu-latam-sdk'),
+        'type' => 'number',
+        'default' => '1',
     )
 );

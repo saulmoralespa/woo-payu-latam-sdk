@@ -27,12 +27,20 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->apikey  = $this->get_option( 'apikey' );
         $this->apilogin  = $this->get_option( 'apilogin' );
         $this->isTest = (boolean)$this->get_option('environment');
+        $installments = (int)$this->get_option('installments');
+
+        if ($installments < 1){
+            $this->update_option('installments', '1');
+        }
+
+        $this->installments = $this->get_option('installments');
 
         $this->currency = get_woocommerce_currency();
         $this->debug = $this->get_option('debug');
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_filter('woocommerce_thankyou_order_received_text', array($this, 'order_received_message') );
+        add_action('woocommerce_api_'.strtolower(get_class($this)), array(&$this, 'confirmation_ipn'));
     }
 
     public function is_available()
@@ -138,5 +146,38 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         }
 
         return $text;
+    }
+
+    public function confirmation_ipn()
+    {
+        $body = file_get_contents('php://input');
+
+        header("HTTP/1.1 200 OK");
+    }
+
+    public function getStatusTransaction($transaction_id)
+    {
+        PayU::$apiKey = $this->apikey;
+        PayU::$apiLogin = $this->apilogin;
+        PayU::$merchantId = $this->merchant_id;
+        PayU::$language = SupportedLanguages::ES;
+        PayU::$isTest = $this->isTest;
+
+        $urlReports = woo_payu_latam_sdk_pls()->createUrl($this->isTest, true);
+        Environment::setReportsCustomUrl($urlReports);
+
+        $parameters = array(PayUParameters::TRANSACTION_ID => $transaction_id);
+
+        $response = null;
+
+        try{
+            $response = PayUReports::getTransactionResponse($parameters);
+            $response = $response->state;
+        }catch (PayUException $e){
+            $response = null;
+            woo_payu_latam_sdk_pls()->log('report: ' . $e->getMessage());
+        }
+
+        return $response;
     }
 }
