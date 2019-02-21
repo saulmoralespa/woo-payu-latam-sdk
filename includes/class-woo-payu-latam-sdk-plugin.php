@@ -140,7 +140,7 @@ class Woo_Payu_Latam_SDK_Plugin
     {
         if (is_checkout() && $this->get_available_payment()){
             wp_enqueue_script( 'payu-latam-sdk-pls-sweet-alert', $this->plugin_url . 'assets/js/sweetalert2.js', array( 'jquery' ), $this->version, true );
-            wp_enqueue_script( 'payu-latam-sdk-pls', $this->plugin_url . 'assets/js/woo-payu-latam-sdk.js', array( 'jquery' ), $this->version, true );
+            wp_enqueue_script( 'payu-latam-sdk-pls', $this->plugin_url . 'assets/js/woo-payu-latam-sdk-pls.js', array( 'jquery' ), $this->version, true );
             wp_enqueue_script( 'payu-latam-sdk-pls-card', $this->plugin_url . 'assets/js/card.js', array( 'jquery' ), $this->version, true );
 
             wp_localize_script( 'payu-latam-sdk-pls', 'payu_latam_sdk_pls', array(
