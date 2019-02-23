@@ -90,7 +90,8 @@ class Woo_Payu_Latam_SDK_Plugin
         require_once ($this->includes_path . 'class-gateway-woo-payu-latam-sdk.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk-boleto.php');
-        require_once ($this->lib_path . 'PayU.php');
+        if (!class_exists('PayU'))
+            require_once ($this->lib_path . 'PayU.php');
 
         add_filter( 'plugin_action_links_' . plugin_basename( $this->file), array( $this, 'plugin_action_links' ) );
         add_filter( 'woocommerce_payment_gateways', array($this, 'woocommerce_payu_latam_sdk_add_gateway'));

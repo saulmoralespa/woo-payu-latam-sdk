@@ -361,7 +361,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
     {
 
         $today = $this->dateCurrent();
-        $day = $this->isWeekend();
+        $day = $this->getDay();
 
         $addDay = 0;
 
@@ -383,7 +383,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     }
 
-    public function isWeekend() {
+    public function getDay()
+    {
         $today = $this->dateCurrent();
         $weekDay = date('w', strtotime($today));
         return $weekDay;
