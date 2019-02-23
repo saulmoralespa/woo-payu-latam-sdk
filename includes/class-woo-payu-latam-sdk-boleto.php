@@ -30,7 +30,7 @@ class WC_Payment_Payu_Latam_SDK_Boleto_PLSB extends WC_Payment_Gateway
         $payu_latam_sdk = new WC_Payment_Payu_Latam_SDK_PLS();
 
         return parent::is_available()
-            && woo_payu_latam_sdk_pls()->getDefaultCountry() === 'CO'
+            && woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
             && !$payu_latam_sdk->isTest;
     }
 
