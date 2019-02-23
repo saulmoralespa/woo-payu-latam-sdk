@@ -95,7 +95,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
                 <input placeholder="123" type="text" name="payu-latam-sdk-cvc" id="payu-latam-sdk-cvc" required="" class="form-control" maxlength="4">
                 <?php if((int)$this->installments > 1):  ?>
                     <select name="payu-latam-sdk-installments" id="payu-latam-sdk-installments">
-                        <option value="" selected>cantidad de cuotas</option>
+                        <option value="" selected><?php _e('Number of installments','woo-payu-latam-sdk'); ?></option>
                     <?php for ($i = 1; $i <= $this->installments; $i++): ?>
                         <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
                     <?php endfor; ?>
@@ -123,7 +123,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $params['id_order'] = $order_id;
 
         $payment = new Payu_Latam_SDK_PLS();
-        $data = $payment->executePayment($params, false);
+        $data = $payment->doPayment($params, false);
 
         if($data['status']){
             wc_reduce_stock_levels($order_id);
@@ -144,7 +144,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
     public function test_payu_latam_sdk()
     {
         $payment = new Payu_Latam_SDK_PLS();
-        $payment->executePayment();
+        $payment->doPayment();
     }
 
     public function order_received_message( $text)

@@ -2,19 +2,19 @@
     'use strict';
 
     const checkout_form = $( 'form.checkout' );
+    const form_card_payu_latam_sdk_pls = '#form-payu-latam-sdk';
 
     $( 'body' ).on( 'updated_checkout', function() {
 
-            if (checkout_form.find('#form-payu-latam-sdk').is(":visible"))
+            if (checkout_form.find(form_card_payu_latam_sdk_pls).is(":visible"))
             {
                 new Card({
-                    form: document.querySelector('#form-payu-latam-sdk'),
+                    form: document.querySelector(form_card_payu_latam_sdk_pls),
                     container: '.card-wrapper'
                 });
             }
 
     } );
-
 
     $(document.body).on('checkout_error', function () {
         swal.close();
@@ -22,34 +22,36 @@
 
     checkout_form.on( 'checkout_place_order', function() {
 
-        let number_card = checkout_form.find('#payu-latam-sdk-number').val();
-        let card_holder = checkout_form.find('#payu-latam-sdk-name').val();
-        let card_expire = checkout_form.find('#payu-latam-sdk-expiry').val();
-        let card_cvv = checkout_form.find('#payu-latam-sdk-cvc').val();
-        let installments =  checkout_form.find('#payu-latam-sdk-installments');
+        if($('form[name="checkout"] input[name="payment_method"]:checked').val() === 'payu_latam_sdk_pls'){
 
-        checkout_form.append($('<input name="payu-latam-sdk-number" type="hidden" />' ).val( number_card ));
-        checkout_form.append($('<input name="payu-latam-sdk-name" type="hidden" />' ).val( card_holder ));
-        checkout_form.append($('<input name="payu-latam-sdk-type" type="hidden" />' ).val( getTypeCard() ));
-        checkout_form.append($('<input name="payu-latam-sdk-expiry" type="hidden" />' ).val( card_expire ));
-        checkout_form.append($('<input name="payu-latam-sdk-cvc" type="hidden" />' ).val( card_cvv ));
-        if (installments.length)
-            checkout_form.append($('<input name="payu-latam-sdk-installments" type="hidden" />' ).val( installments.val() ));
+            let number_card = checkout_form.find('#payu-latam-sdk-number').val();
+            let card_holder = checkout_form.find('#payu-latam-sdk-name').val();
+            let card_expire = checkout_form.find('#payu-latam-sdk-expiry').val();
+            let card_cvv = checkout_form.find('#payu-latam-sdk-cvc').val();
+            let installments =  checkout_form.find('#payu-latam-sdk-installments');
 
-        let inputError = checkout_form.find("input[name=payu-latam-sdk-errorcard]");
+            checkout_form.append($('<input name="payu-latam-sdk-number" type="hidden" />' ).val( number_card ));
+            checkout_form.append($('<input name="payu-latam-sdk-name" type="hidden" />' ).val( card_holder ));
+            checkout_form.append($('<input name="payu-latam-sdk-payment-method" type="hidden" />' ).val( getTypeCard() ));
+            checkout_form.append($('<input name="payu-latam-sdk-expiry" type="hidden" />' ).val( card_expire ));
+            checkout_form.append($('<input name="payu-latam-sdk-cvc" type="hidden" />' ).val( card_cvv ));
+            if (installments.length)
+                checkout_form.append($('<input name="payu-latam-sdk-installments" type="hidden" />' ).val( installments.val() ));
 
-        if( inputError.length )
-        {
-            inputError.remove();
-        }
+            let inputError = checkout_form.find("input[name=payu-latam-sdk-errorcard]");
 
+            if( inputError.length )
+            {
+                inputError.remove();
+            }
 
-        if (!number_card || !card_holder || getTypeCard(checkout_form) === null || !card_expire || !card_cvv){
-            checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjEmptyInputs}">`);
-        }else if (!checkCard()){
-            checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoCard}">`);
-        }else if ((installments.length && installments.val() === '')){
-            checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoInstallments}">`);
+            if (!number_card || !card_holder || getTypeCard(checkout_form) === null || !card_expire || !card_cvv){
+                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjEmptyInputs}">`);
+            }else if (!checkCard()){
+                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoCard}">`);
+            }else if ((installments.length && installments.val() === '')){
+                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoInstallments}">`);
+            }
         }
 
         swal.fire({

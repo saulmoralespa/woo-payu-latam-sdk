@@ -89,6 +89,7 @@ class Woo_Payu_Latam_SDK_Plugin
     {
         require_once ($this->includes_path . 'class-gateway-woo-payu-latam-sdk.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk.php');
+        require_once ($this->includes_path . 'class-woo-payu-latam-sdk-boleto.php');
         require_once ($this->lib_path . 'PayU.php');
 
         add_filter( 'plugin_action_links_' . plugin_basename( $this->file), array( $this, 'plugin_action_links' ) );
@@ -109,15 +110,13 @@ class Woo_Payu_Latam_SDK_Plugin
     public function woocommerce_payu_latam_sdk_add_gateway($methods)
     {
         $methods[] = 'WC_Payment_Payu_Latam_SDK_PLS';
+        $methods[] = 'WC_Payment_Payu_Latam_SDK_Boleto_PLSB';
         return $methods;
     }
 
     public function custom_woocommerce_billing_fields($fields)
     {
-        $woo_countries = new WC_Countries();
-        $default_country = $woo_countries->get_base_country();
-
-        if ($default_country !== 'BR' && $this->get_available_payment()) {
+        if ($this->getDefaultCountry() !== 'BR' && $this->get_available_payment()) {
             $fields['billing_dni'] = array(
                 'label' => __('DNI', 'woo-payu-latam-sdk'),
                 'placeholder' => _x('Your DNI here....', 'placeholder', 'woo-payu-latam-sdk'),
@@ -222,6 +221,14 @@ class Woo_Payu_Latam_SDK_Plugin
             $url .= 'payments-api/4.0/service.cgi';
         }
         return $url;
+    }
+
+    public function getDefaultCountry()
+    {
+        $woo_countries = new WC_Countries();
+        $default_country = $woo_countries->get_base_country();
+
+        return $default_country;
     }
 
 }
