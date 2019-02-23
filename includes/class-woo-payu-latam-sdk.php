@@ -82,7 +82,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             $parameters = array_merge($this->paramsBasicPayu(),
                 $this->paramsBuyerPayu(false),
                 $this->paramsPayerPayu(),
-                $this->paramsLeftoverPayu()
+                $this->paramsLeftoverPayu(),
+                $this->paramExpirePayu()
             );
         }
 
@@ -302,7 +303,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
             && !$this->isCash())
             return array(
-                PayUParameters::PAYER_EMAIL => $this->dataPayment['email']
+                PayUParameters::PAYER_NAME => ($this->testCheck || $this->isTest) ? "APPROVED" :  $this->buyerName,
             );
 
 
@@ -320,6 +321,13 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             PayUParameters::PAYER_PHONE => $this->dataPayment['phone']
         );
 
+        if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
+            && $this->isCash()){
+            unset($params[1]);
+            unset($params[2]);
+            unset($params[3]);
+            unset($params[10]);
+        }
         return $params;
     }
 
@@ -336,9 +344,56 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         return $params;
     }
 
+
+    public function paramExpirePayu()
+    {
+        return array(
+            PayUParameters::EXPIRATION_DATE => $this->dateExpire()
+        );
+    }
+
     public function isCash()
     {
         return in_array($this->paymentMethod, $this->paymentsCash());
+    }
+
+    public function dateExpire()
+    {
+
+        $today = $this->dateCurrent();
+        $day = $this->isWeekend();
+
+        $addDay = 0;
+
+        if ($day == 0)
+            $addDay += 1;
+        if ($day == 5)
+            $addDay += 3;
+        if ($day == 6)
+            $addDay += 2;
+
+        if($addDay > 0){
+            $today = strtotime ( "+$addDay days" , strtotime ( $today ) );
+            $today = date ( 'Y-m-d H:i:s' , $today );
+        }
+
+        $today = str_replace(' ', 'T', $today);
+
+        return $today;
+
+    }
+
+    public function isWeekend() {
+        $today = $this->dateCurrent();
+        $weekDay = date('w', strtotime($today));
+        return $weekDay;
+    }
+
+    public function dateCurrent()
+    {
+        $dateCurrent = date('Y-m-d H:i:s', current_time( 'timestamp' ));
+
+        return $dateCurrent;
     }
 
     public function executePayment(array $parameters, $order = null)
@@ -385,6 +440,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                             $order->get_checkout_order_received_url());
                     }elseif ($this->paymentMethod === 'BOLETO_BANCARIO'){
                         $redirect_url = $response->transactionResponse->extraParameters->URL_BOLETO_BANCARIO;
+                        $aprovved   = true;
                     }
                 } elseif ($response->transactionResponse->state == "DECLINED") {
                     $transactionId = $response->transactionResponse->transactionId;

@@ -182,7 +182,7 @@ class Woo_Payu_Latam_SDK_Plugin
                 if ($state === 'APPROVED'){
                     $order->payment_complete($row->transactionid);
                     $order->add_order_note(sprintf(__('Successful payment (Transaction ID: %s)',
-                        'subscription-payu-latam'), $row->transactionid));
+                        'woo-payu-latam-sdk'), $row->transactionid));
                 }elseif ($state === 'DECLINED'){
                     $order->add_order_note(sprintf(__('Payment declined (Transaction ID: %s)',
                         'woo-payu-latam-sdk'), $row->transactionid));

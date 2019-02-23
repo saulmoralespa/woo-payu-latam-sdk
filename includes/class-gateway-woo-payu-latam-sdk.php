@@ -158,8 +158,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
 
     public function confirmation_ipn()
     {
-        $body = file_get_contents('php://input');
-
+        //$body = file_get_contents('php://input');
         header("HTTP/1.1 200 OK");
     }
 
@@ -183,7 +182,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
             $response = $response->state;
         }catch (PayUException $e){
             $response = null;
-            woo_payu_latam_sdk_pls()->log('report: ' . $e->getMessage());
+            woo_payu_latam_sdk_pls()->log('status transaction: ' . $e->getMessage());
         }
 
         return $response;
