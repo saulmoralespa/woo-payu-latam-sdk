@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-19 22:59+0000\n"
+"POT-Creation-Date: 2019-02-24 23:16+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,137 +15,128 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.0; wp-5.0.3"
 
-#: woo-payu-latam-sdk.php:106 woo-payu-latam-sdk.php:118
-#: woo-payu-latam-sdk.php:132
-#, php-format
-msgid "%s"
+#: woo-payu-latam-sdk.php:51
+msgid "payU Latam SDK: Requires php version 5.6.0 or higher"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:16
-#: includes/admin/payu-settings.php:27
-msgid "Accept credit card and cash payments"
+#: woo-payu-latam-sdk.php:59
+msgid ""
+"payU Latam SDK: Requires OpenSSL >= 1.0.1 to be installed on your server"
 msgstr ""
 
-#: includes/admin/payu-settings.php:56
-msgid "Account id"
+#: woo-payu-latam-sdk.php:95
+msgid "payU Latam SDK: Woocommerce must be installed and active."
 msgstr ""
 
-#: includes/admin/payu-settings.php:58
-msgid "account id, you find it in the payu account"
+#: woo-payu-latam-sdk.php:105
+msgid ""
+"payU Latam SDK: Requires one of these currencies USD, BRL, COP, MXN, PEN "
 msgstr ""
 
-#: includes/admin/payu-settings.php:63
-msgid "Apikey"
-msgstr ""
-
-#: includes/admin/payu-settings.php:65
-msgid "apikey, you find it in the payu account"
-msgstr ""
-
-#: includes/admin/payu-settings.php:71
-msgid "Apilogin"
-msgstr ""
-
-#: includes/admin/payu-settings.php:73
-msgid "apilogin, you find it in the payu account"
-msgstr ""
-
-#: includes/class-gateway-woo-payu-latam-sdk.php:83
-msgid "Card number"
-msgstr ""
-
-#: includes/class-gateway-woo-payu-latam-sdk.php:84
-msgid "Cardholder"
-msgstr ""
-
-#: woo-payu-latam-sdk.php:106 woo-payu-latam-sdk.php:118
+#: woo-payu-latam-sdk.php:108 woo-payu-latam-sdk.php:124
 msgid "Click here to configure"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:173
-msgid "Click here to see"
+#: woo-payu-latam-sdk.php:120
+msgid ""
+"payU Latam SDK: It requires that the country of the store be some of these "
+"countries\n"
+"             Argentina, Brazil, Colombia, Mexico, Panama and Peru "
 msgstr ""
 
+#: woo-payu-latam-sdk.php:138
+msgid "payU Latam SDK: the plugin is required "
+msgstr ""
+
+#: woo-payu-latam-sdk.php:141
+msgid "WooCommerce Extra Checkout Fields for Brazil"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-boleto.php:15
+#: includes/class-woo-payu-latam-sdk-boleto.php:51
+msgid "Boleto Bancário"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-boleto.php:16
+msgid "cash payment"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-boleto.php:17
 #: includes/class-gateway-woo-payu-latam-sdk.php:18
 msgid "Continue to payment"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:63
-msgid ""
-"Could not perform any tests, because you have not entered all the required "
-"fields"
-msgstr ""
-
-#: includes/class-gateway-woo-payu-latam-sdk.php:82
-msgid "Data of card"
-msgstr ""
-
-#: includes/admin/payu-settings.php:31
-msgid "Debug"
-msgstr ""
-
-#: includes/admin/payu-settings.php:33
-msgid "Debug records, it is saved in payment log"
-msgstr ""
-
-#: includes/class-woo-payu-latam-sdk-plugin.php:103
-msgid "Documentation"
-msgstr ""
-
+#: includes/class-woo-payu-latam-sdk-boleto.php:42
 #: includes/admin/payu-settings.php:13
-msgid "Enable Payu Latam SDK"
-msgstr ""
-
-#: includes/admin/payu-settings.php:40
-msgid "Enable to run tests"
-msgstr ""
-
-#: includes/admin/payu-settings.php:11
 msgid "Enable/Disable"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk-plugin.php:129
-msgid "Enter the card information"
+#: includes/class-woo-payu-latam-sdk-boleto.php:44
+msgid "Enable Boleto Bancário"
 msgstr ""
 
-#: includes/admin/payu-settings.php:37
-msgid "Environment"
+#: includes/class-woo-payu-latam-sdk-boleto.php:48
+#: includes/admin/payu-settings.php:19
+msgid "Title"
 msgstr ""
 
-#. Author URI of the plugin
-msgid "https://saulmoralespa.com"
+#: includes/class-woo-payu-latam-sdk-boleto.php:50
+#: includes/admin/payu-settings.php:21
+msgid "It corresponds to the title that the user sees during the checkout"
 msgstr ""
 
-#: includes/admin/payu-settings.php:26
+#: includes/class-woo-payu-latam-sdk-boleto.php:55
+msgid "Description"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-boleto.php:57
+#: includes/admin/payu-settings.php:28
 msgid ""
 "It corresponds to the description that the user will see during the checkout"
 msgstr ""
 
-#: includes/admin/payu-settings.php:19
-msgid "It corresponds to the title that the user sees during the checkout"
+#: includes/class-woo-payu-latam-sdk-boleto.php:58
+msgid "Boleto Bancário cash"
 msgstr ""
 
-#: includes/admin/payu-settings.php:49
-msgid "Merchant id"
+#: includes/class-woo-payu-latam-sdk.php:423
+#: includes/class-woo-payu-latam-sdk.php:425
+#: includes/class-woo-payu-latam-sdk-plugin.php:185
+#, php-format
+msgid "Successful payment (Transaction ID: %s)"
 msgstr ""
 
-#: includes/admin/payu-settings.php:51
-msgid "Merchant id, you find it in the payu account"
+#: includes/class-woo-payu-latam-sdk.php:433
+#, php-format
+msgid "Pending approval (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:15
-msgid "Payu Latam"
+#: includes/class-woo-payu-latam-sdk.php:437
+#, php-format
+msgid "Payment pending (Transaction ID: %s)"
 msgstr ""
 
-#. Description of the plugin
-msgid "payU latam  use sdk."
+#: includes/class-woo-payu-latam-sdk.php:448
+msgid "Payment declined"
 msgstr ""
 
-#. Name of the plugin
-msgid "payU Latam SDK"
+#: includes/class-woo-payu-latam-sdk.php:451
+#: includes/class-woo-payu-latam-sdk-plugin.php:188
+#, php-format
+msgid "Payment declined (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:172
+#: includes/class-woo-payu-latam-sdk.php:457
+msgid "Payment expired"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:460
+#: includes/class-woo-payu-latam-sdk-plugin.php:192
+#, php-format
+msgid "Payment expired (Transaction ID: %s)"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:473
 #, php-format
 msgid ""
 "payU Latam SDK: Check that you have entered correctly merchant id, account "
@@ -153,66 +144,170 @@ msgid ""
 "%s Message error: %s code error: %s"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:118
-msgid ""
-"payU Latam SDK: It requires that the country of the store be some of these "
-"countries Argentina, Brazil, Colombia, Mexico, Panama and Peru "
+#: includes/class-woo-payu-latam-sdk.php:474
+msgid "Click here to see"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:106
-msgid ""
-"payU Latam SDK: Requires one of these currencies USD, BRL, COP, MXN, PEN "
+#: includes/class-woo-payu-latam-sdk-plugin.php:106
+msgid "Settings"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:60
-msgid ""
-"payU Latam SDK: Requires OpenSSL >= 1.0.1 to be installed on your server"
+#: includes/class-woo-payu-latam-sdk-plugin.php:107
+msgid "Documentation"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:51
-msgid "payU Latam SDK: Requires php version 5.6.0 or higher"
+#: includes/class-woo-payu-latam-sdk-plugin.php:122
+msgid "DNI"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:132
-msgid "payU Latam SDK: the plugin is required "
+#: includes/class-woo-payu-latam-sdk-plugin.php:123
+msgctxt "placeholder"
+msgid "Your DNI here...."
 msgstr ""
 
-#: woo-payu-latam-sdk.php:96
-msgid "payU Latam SDK: Woocommerce must be installed and active."
+#: includes/class-woo-payu-latam-sdk-plugin.php:148
+msgid "The type of card is not accepted"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk-plugin.php:130
+#: includes/class-woo-payu-latam-sdk-plugin.php:149
+msgid "Enter the card information"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-plugin.php:150
 msgid "Please wait..."
 msgstr ""
 
+#: includes/class-woo-payu-latam-sdk-plugin.php:151
+msgid "Redirecting to verify status..."
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-plugin.php:152
+msgid "Select the number of installments"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:15
+msgid "Payu Latam"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:16
+#: includes/admin/payu-settings.php:29
+msgid "Accept credit card and cash payments"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:70
+msgid ""
+"Could not perform any tests, because you have not entered all the required "
+"fields"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:89
+msgid "Data of card"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:90
+msgid "Card number"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:91
+msgid "Cardholder"
+msgstr ""
+
+#: includes/class-gateway-woo-payu-latam-sdk.php:97
+msgid "Number of installments"
+msgstr ""
+
+#: includes/admin/payu-settings.php:9
+msgid "For tests use the credentials provided by payU latam"
+msgstr ""
+
+#: includes/admin/payu-settings.php:15
+msgid "Enable Payu Latam SDK"
+msgstr ""
+
+#: includes/admin/payu-settings.php:33
+msgid "Debug"
+msgstr ""
+
+#: includes/admin/payu-settings.php:35
+msgid "Debug records, it is saved in payment log"
+msgstr ""
+
+#: includes/admin/payu-settings.php:39
+msgid "Credentials"
+msgstr ""
+
 #: includes/admin/payu-settings.php:44
+msgid "Environment"
+msgstr ""
+
+#: includes/admin/payu-settings.php:47
+msgid "Enable to run tests"
+msgstr ""
+
+#: includes/admin/payu-settings.php:51
 msgid "Production"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk-plugin.php:131
-msgid "Redirecting to verify status..."
+#: includes/admin/payu-settings.php:52
+msgid "Test"
+msgstr ""
+
+#: includes/admin/payu-settings.php:56
+msgid "Merchant id"
+msgstr ""
+
+#: includes/admin/payu-settings.php:58
+msgid "Merchant id, you find it in the payu account"
+msgstr ""
+
+#: includes/admin/payu-settings.php:63
+msgid "Account id"
+msgstr ""
+
+#: includes/admin/payu-settings.php:65
+msgid "account id, you find it in the payu account"
+msgstr ""
+
+#: includes/admin/payu-settings.php:70
+msgid "Apikey"
+msgstr ""
+
+#: includes/admin/payu-settings.php:72
+msgid "apikey, you find it in the payu account"
+msgstr ""
+
+#: includes/admin/payu-settings.php:78
+msgid "Apilogin"
+msgstr ""
+
+#: includes/admin/payu-settings.php:80
+msgid "apilogin, you find it in the payu account"
+msgstr ""
+
+#: includes/admin/payu-settings.php:86
+msgid "Installments number"
+msgstr ""
+
+#: includes/admin/payu-settings.php:88
+msgid "The maximum number of installments that the user can select"
+msgstr ""
+
+#: includes/admin/payu-settings.php:91
+msgid "Installments"
+msgstr ""
+
+#. Name of the plugin
+msgid "Woo payU latam sdk"
+msgstr ""
+
+#. Description of the plugin
+msgid "payU latam  use sdk."
 msgstr ""
 
 #. Author of the plugin
 msgid "Saul Morales Pacheco"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk-plugin.php:102
-msgid "Settings"
-msgstr ""
-
-#: includes/admin/payu-settings.php:45
-msgid "Test"
-msgstr ""
-
-#: includes/class-woo-payu-latam-sdk-plugin.php:128
-msgid "The type of card is not accepted"
-msgstr ""
-
-#: includes/admin/payu-settings.php:17
-msgid "Title"
-msgstr ""
-
-#: woo-payu-latam-sdk.php:132
-msgid "WooCommerce Extra Checkout Fields for Brazil"
+#. Author URI of the plugin
+msgid "https://saulmoralespa.com"
 msgstr ""
