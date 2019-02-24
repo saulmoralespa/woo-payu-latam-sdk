@@ -87,6 +87,14 @@
             case (classCard.indexOf('diners') !== -1 && (countryCode !== 'MX' || countryCode !== 'PA') ):
                 $(inputCard).val('DINERS');
                 isAcceptableCard = true;
+                break;
+            case (classCard.indexOf('elo') !== -1 && countryCode === 'BR' ):
+                $(inputCard).val('ELO');
+                isAcceptableCard = true;
+                break;
+            case (classCard.indexOf('hipercard') !== -1 && countryCode === 'BR' ):
+                $(inputCard).val('HIPERCARD');
+                isAcceptableCard = true;
         }
 
         return isAcceptableCard;
@@ -101,6 +109,7 @@
 
         let classTypeCard = classCard.split(' ');
         let typeCard = classTypeCard[1].split('jp-card-');
+
         return typeCard[1].toUpperCase();
     }
 

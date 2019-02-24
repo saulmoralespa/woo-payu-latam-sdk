@@ -39,7 +39,6 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->debug = $this->get_option('debug');
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
-        add_filter('woocommerce_thankyou_order_received_text', array($this, 'order_received_message') );
         add_action('woocommerce_api_'.strtolower(get_class($this)), array(&$this, 'confirmation_ipn'));
     }
 
@@ -145,15 +144,6 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
     {
         $payment = new Payu_Latam_SDK_PLS();
         $payment->doPayment();
-    }
-
-    public function order_received_message( $text)
-    {
-        if(!empty($_GET['msg'])){
-            return $text .' '.$_GET['msg'];
-        }
-
-        return $text;
     }
 
     public function confirmation_ipn()

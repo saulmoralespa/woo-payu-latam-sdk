@@ -40,6 +40,11 @@ return array(
         'type'        => 'title',
         'description' => trailingslashit(get_bloginfo( 'url' )) . trailingslashit('wc-api') . "wc_payment_payu_latam_sdk_pls",
     ),
+    'api'          => array(
+        'title'       => __( 'Credentials', 'woo-payu-latam-sdk'),
+        'type'        => 'title',
+        'description' => $credentials,
+    ),
     'environment' => array(
         'title' => __('Environment', 'woo-payu-latam-sdk'),
         'type'        => 'select',
@@ -51,11 +56,6 @@ return array(
             false    => __( 'Production', 'woo-payu-latam-sdk' ),
             true => __( 'Test', 'woo-payu-latam-sdk' ),
         ),
-    ),
-    'api'          => array(
-        'title'       => __( 'Credentials', 'woo-payu-latam-sdk'),
-        'type'        => 'title',
-        'description' => $credentials,
     ),
     'merchant_id' => array(
         'title' => __('Merchant id', 'woo-payu-latam-sdk'),

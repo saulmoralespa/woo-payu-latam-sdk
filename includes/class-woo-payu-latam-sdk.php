@@ -421,7 +421,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $transactionId = $response->transactionResponse->transactionId;
                     $order->payment_complete($transactionId);
                     $order->add_order_note(sprintf(__('Successful payment (Transaction ID: %s)',
-                        'suscription-payu-latam'), $transactionId));
+                        'woo-payu-latam-sdk'), $transactionId));
                     $message   = sprintf(__('Successful payment (Transaction ID: %s)', 'woo-payu-latam-sdk'),
                         $transactionId);
                     $messageClass  = 'woocommerce-message';
