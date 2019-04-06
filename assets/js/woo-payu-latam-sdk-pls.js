@@ -51,6 +51,8 @@
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoCard}">`);
             }else if ((installments.length && installments.val() === '')){
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoInstallments}">`);
+            }else if(!valid_credit_card(number_card)){
+                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoCardValidate}">`);
             }
         }
 
@@ -111,6 +113,29 @@
         let typeCard = classTypeCard[1].split('jp-card-');
 
         return typeCard[1].toUpperCase();
+    }
+
+    function valid_credit_card(value) {
+        // accept only digits, dashes or spaces
+        if (/[^0-9-\s]+/.test(value)) return false;
+
+        // The Luhn Algorithm. It's so pretty.
+        var nCheck = 0, nDigit = 0, bEven = false;
+        value = value.replace(/\D/g, "");
+
+        for (var n = value.length - 1; n >= 0; n--) {
+            var cDigit = value.charAt(n);
+            nDigit = parseInt(cDigit, 10);
+
+            if (bEven) {
+                if ((nDigit *= 2) > 9) nDigit -= 9;
+            }
+
+            nCheck += nDigit;
+            bEven = !bEven;
+        }
+
+        return (nCheck % 10) === 0;
     }
 
 }(jQuery));

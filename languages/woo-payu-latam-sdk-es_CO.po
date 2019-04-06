@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-24 23:03+0000\n"
-"PO-Revision-Date: 2019-02-24 23:13+0000\n"
+"POT-Creation-Date: 2019-04-06 23:30+0000\n"
+"PO-Revision-Date: 2019-04-06 23:32+0000\n"
 "Last-Translator: wpdev <cortuclas@gmail.com>\n"
 "Language-Team: Español de Colombia\n"
 "Language: es_CO\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.2.0; wp-5.1"
+"X-Loco-Version: 2.2.2; wp-5.1.1"
 
 #: woo-payu-latam-sdk.php:51
 msgid "payU Latam SDK: Requires php version 5.6.0 or higher"
@@ -89,6 +89,7 @@ msgid "It corresponds to the title that the user sees during the checkout"
 msgstr "Corresponde al título que el usuario ve durante la compra"
 
 #: includes/class-woo-payu-latam-sdk-boleto.php:55
+#: includes/admin/payu-settings.php:26
 msgid "Description"
 msgstr "Descripción"
 
@@ -103,44 +104,44 @@ msgstr ""
 msgid "Boleto Bancário cash"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:423
-#: includes/class-woo-payu-latam-sdk.php:425
-#: includes/class-woo-payu-latam-sdk-plugin.php:185
+#: includes/class-woo-payu-latam-sdk.php:426
+#: includes/class-woo-payu-latam-sdk.php:428
+#: includes/class-woo-payu-latam-sdk-plugin.php:188
 #, php-format
 msgid "Successful payment (Transaction ID: %s)"
 msgstr "Pago exitoso (ID de transacción: %s)"
 
-#: includes/class-woo-payu-latam-sdk.php:433
+#: includes/class-woo-payu-latam-sdk.php:437
 #, php-format
 msgid "Pending approval (Transaction ID: %s)"
 msgstr "Aprobación pendiente (ID de transacción: %s)"
 
-#: includes/class-woo-payu-latam-sdk.php:437
+#: includes/class-woo-payu-latam-sdk.php:441
 #, php-format
 msgid "Payment pending (Transaction ID: %s)"
 msgstr "Pago pendiente (ID de transacción: %s)"
 
-#: includes/class-woo-payu-latam-sdk.php:448
+#: includes/class-woo-payu-latam-sdk.php:452
 msgid "Payment declined"
 msgstr "Pago rechazado"
 
-#: includes/class-woo-payu-latam-sdk.php:451
-#: includes/class-woo-payu-latam-sdk-plugin.php:188
+#: includes/class-woo-payu-latam-sdk.php:455
+#: includes/class-woo-payu-latam-sdk-plugin.php:192
 #, php-format
 msgid "Payment declined (Transaction ID: %s)"
 msgstr "Pago rechazado (ID de transacción: %s)"
 
-#: includes/class-woo-payu-latam-sdk.php:457
+#: includes/class-woo-payu-latam-sdk.php:461
 msgid "Payment expired"
 msgstr "Pago vencido"
 
-#: includes/class-woo-payu-latam-sdk.php:460
-#: includes/class-woo-payu-latam-sdk-plugin.php:192
+#: includes/class-woo-payu-latam-sdk.php:464
+#: includes/class-woo-payu-latam-sdk-plugin.php:196
 #, php-format
 msgid "Payment expired (Transaction ID: %s)"
 msgstr "Pago vencido (ID de transacción: %s)"
 
-#: includes/class-woo-payu-latam-sdk.php:473
+#: includes/class-woo-payu-latam-sdk.php:477
 #, php-format
 msgid ""
 "payU Latam SDK: Check that you have entered correctly merchant id, account "
@@ -151,7 +152,7 @@ msgstr ""
 "account id, Api Key, Apilogin. Para realizar pruebas use las credenciales "
 "proporcionadas por payU %s Mensaje de error: %s código de error: %s"
 
-#: includes/class-woo-payu-latam-sdk.php:474
+#: includes/class-woo-payu-latam-sdk.php:478
 msgid "Click here to see"
 msgstr "Haga clic aquí para ver"
 
@@ -191,6 +192,10 @@ msgstr "Redireccionando para verificar el estado..."
 #: includes/class-woo-payu-latam-sdk-plugin.php:152
 msgid "Select the number of installments"
 msgstr "Seleccione el número de cuotas"
+
+#: includes/class-woo-payu-latam-sdk-plugin.php:153
+msgid "Card number invalid"
+msgstr "Número de tarjeta inválido"
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:15
 msgid "Payu Latam"
@@ -242,75 +247,71 @@ msgid "Debug records, it is saved in payment log"
 msgstr "Registros de depuración, se guarda en el registro de pagos."
 
 #: includes/admin/payu-settings.php:39
-msgid "confirmation url"
-msgstr ""
-
-#: includes/admin/payu-settings.php:44
 msgid "Credentials"
 msgstr "Credenciales"
 
-#: includes/admin/payu-settings.php:49
+#: includes/admin/payu-settings.php:44
 msgid "Environment"
 msgstr "Ambiente"
 
-#: includes/admin/payu-settings.php:52
+#: includes/admin/payu-settings.php:47
 msgid "Enable to run tests"
 msgstr "Habilitar para ejecutar pruebas"
 
-#: includes/admin/payu-settings.php:56
+#: includes/admin/payu-settings.php:51
 msgid "Production"
 msgstr "Producción"
 
-#: includes/admin/payu-settings.php:57
+#: includes/admin/payu-settings.php:52
 msgid "Test"
 msgstr "Pruebas"
 
-#: includes/admin/payu-settings.php:61
+#: includes/admin/payu-settings.php:56
 msgid "Merchant id"
 msgstr ""
 
-#: includes/admin/payu-settings.php:63
+#: includes/admin/payu-settings.php:58
 msgid "Merchant id, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:68
+#: includes/admin/payu-settings.php:63
 msgid "Account id"
 msgstr ""
 
-#: includes/admin/payu-settings.php:70
+#: includes/admin/payu-settings.php:65
 msgid "account id, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:75
+#: includes/admin/payu-settings.php:70
 msgid "Apikey"
 msgstr ""
 
-#: includes/admin/payu-settings.php:77
+#: includes/admin/payu-settings.php:72
 msgid "apikey, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:83
+#: includes/admin/payu-settings.php:78
 msgid "Apilogin"
 msgstr ""
 
-#: includes/admin/payu-settings.php:85
+#: includes/admin/payu-settings.php:80
 msgid "apilogin, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:91
+#: includes/admin/payu-settings.php:86
 msgid "Installments number"
 msgstr "Numero de cuotas"
 
-#: includes/admin/payu-settings.php:93
+#: includes/admin/payu-settings.php:88
 msgid "The maximum number of installments that the user can select"
 msgstr "El número máximo de cuotas que el usuario puede seleccionar"
 
-#: includes/admin/payu-settings.php:96
+#: includes/admin/payu-settings.php:91
 msgid "Installments"
 msgstr "Cuotas"
 
 #. Name of the plugin
-msgid "Woo payU latam sdk"
+msgid "Woo payU latam SDK"
 msgstr ""
 
 #. Description of the plugin

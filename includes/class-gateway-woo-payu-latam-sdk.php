@@ -39,7 +39,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->debug = $this->get_option('debug');
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
-        add_action('woocommerce_api_'.strtolower(get_class($this)), array(&$this, 'confirmation_ipn'));
+        add_action('woocommerce_api_'.strtolower(get_class($this)), array($this, 'confirmation_ipn'));
     }
 
     public function is_available()
@@ -125,7 +125,6 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $data = $payment->doPayment($params, false);
 
         if($data['status']){
-            wc_reduce_stock_levels($order_id);
             WC()->cart->empty_cart();
             return array(
                 'result' => 'success',
@@ -148,7 +147,12 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
 
     public function confirmation_ipn()
     {
-        //$body = file_get_contents('php://input');
+        $body = file_get_contents('php://input');
+        parse_str($body, $data);
+
+        woo_payu_latam_sdk_pls()->log($data);
+
+
         header("HTTP/1.1 200 OK");
     }
 

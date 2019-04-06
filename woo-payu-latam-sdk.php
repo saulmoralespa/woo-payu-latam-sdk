@@ -1,8 +1,8 @@
 <?php
 /*
-Plugin Name: Woo payU latam sdk
+Plugin Name: Woo payU latam SDK
 Description: payU latam  use sdk.
-Version: 1.0.0
+Version: 1.0.1
 Author: Saul Morales Pacheco
 Author URI: https://saulmoralespa.com
 License: GNU General Public License v3.0
@@ -16,7 +16,7 @@ WC requires at least: 2.6
 if (!defined( 'ABSPATH' )) exit;
 
 if(!defined('WOO_PAYU_LATAM_SDK_PLS_VERSION')){
-    define('WOO_PAYU_LATAM_SDK_PLS_VERSION', '1.0.0');
+    define('WOO_PAYU_LATAM_SDK_PLS_VERSION', '1.0.1');
 }
 
 if(!defined('WOO_PAYU_LATAM_SDK_PLS_NAME')){
@@ -50,7 +50,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             $php = __('payU Latam SDK: Requires php version 5.6.0 or higher', 'woo-payu-latam-sdk');
             add_action('admin_notices', function() use($php) {
-                woo_payu_subscriptions_reports_notices($php);
+                woo_payu_latam_sdk_pls_notices($php);
             });
         }
         return false;
@@ -61,7 +61,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
     if ( ! defined( 'OPENSSL_VERSION_TEXT' ) ) {
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             add_action('admin_notices', function() use($openssl_warning) {
-                woo_payu_subscriptions_reports_notices($openssl_warning);
+                woo_payu_latam_sdk_pls_notices($openssl_warning);
             });
         }
         return false;
@@ -71,7 +71,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
     if ( empty( $matches[1] ) ) {
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             add_action('admin_notices', function() use($openssl_warning) {
-                woo_payu_subscriptions_reports_notices($openssl_warning);
+                woo_payu_latam_sdk_pls_notices($openssl_warning);
             });
         }
         return false;
@@ -80,7 +80,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
     if ( ! version_compare( $matches[1], '1.0.1', '>=' ) ) {
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             add_action('admin_notices', function() use($openssl_warning) {
-                woo_payu_subscriptions_reports_notices($openssl_warning);
+                woo_payu_latam_sdk_pls_notices($openssl_warning);
             });
         }
         return false;
@@ -94,7 +94,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
         if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
             $woo = __( 'payU Latam SDK: Woocommerce must be installed and active.', 'woo-payu-latam-sdk' );
             add_action('admin_notices', function() use($woo) {
-                woo_payu_subscriptions_reports_notices($woo);
+                woo_payu_latam_sdk_pls_notices($woo);
             });
         }
         return false;
@@ -107,7 +107,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
                     . 'admin.php?page=wc-settings&tab=general#s2id_woocommerce_currency">'
                     . __('Click here to configure', 'woo-payu-latam-sdk') . '</a>' );
             add_action('admin_notices', function() use($currency) {
-                woo_payu_subscriptions_reports_notices($currency);
+                woo_payu_latam_sdk_pls_notices($currency);
             });
         }
         return false;
@@ -123,7 +123,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
                     . 'admin.php?page=wc-settings&tab=general#s2id_woocommerce_currency">'
                     .  __('Click here to configure', 'woo-payu-latam-sdk') . '</a>' );
             add_action('admin_notices', function() use($country) {
-                woo_payu_subscriptions_reports_notices($country);
+                woo_payu_latam_sdk_pls_notices($country);
             });
         }
         return false;
@@ -140,7 +140,7 @@ function requeriments_woo_payu_latam_sdk_pls(){
                     '<a href="https://wordpress.org/plugins/woocommerce-extra-checkout-fields-for-brazil/">'
                     . __('WooCommerce Extra Checkout Fields for Brazil', 'woo-payu-latam-sdk') . '</a>' );
             add_action('admin_notices', function() use($fieldsbrazil) {
-                woo_payu_subscriptions_reports_notices($fieldsbrazil);
+                woo_payu_latam_sdk_pls_notices($fieldsbrazil);
             });
         }
         return false;

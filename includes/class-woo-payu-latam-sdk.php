@@ -1,4 +1,4 @@
-    <?php
+<?php
 /**
  * Created by PhpStorm.
  * User: smp
@@ -75,8 +75,6 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 )
             );
         }
-
-
 
         if (isset($params) && $this->paymentMethod === 'BOLETO_BANCARIO'){
             $parameters = array_merge($this->paramsBasicPayu(),
@@ -265,7 +263,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             PayUParameters::REFERENCE_CODE => $this->dataPayment['reference'],
             PayUParameters::DESCRIPTION => $this->dataPayment['description'],
             PayUParameters::VALUE => $this->dataPayment['total'],
-            PayUParameters::CURRENCY => $this->getCurrency()
+            PayUParameters::CURRENCY => $this->getCurrency(),
+            PayUParameters::NOTIFY_URL => $this->getUrlNotify()
         );
 
         return $params;
@@ -297,7 +296,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     }
 
-    public function paramsPayerPayu($onlyEmail = true)
+    public function paramsPayerPayu()
     {
 
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
@@ -374,10 +373,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
         if($addDay > 0){
             $today = strtotime ( "+$addDay days" , strtotime ( $today ) );
-            $today = date ( 'Y-m-d H:i:s' , $today );
+            $today = date ( PayUConfig::PAYU_DATE_FORMAT , $today );
         }
-
-        $today = str_replace(' ', 'T', $today);
 
         return $today;
 
@@ -392,9 +389,15 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     public function dateCurrent()
     {
-        $dateCurrent = date('Y-m-d H:i:s', current_time( 'timestamp' ));
+        $dateCurrent = date(PayUConfig::PAYU_DATE_FORMAT, current_time( 'timestamp' ));
 
         return $dateCurrent;
+    }
+
+    public function getUrlNotify()
+    {
+        $url = trailingslashit(get_bloginfo( 'url' )) . trailingslashit('wc-api') . strtolower(get_parent_class($this));
+        return $url;
     }
 
     public function executePayment(array $parameters, $order = null)
@@ -426,6 +429,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                         $transactionId);
                     $messageClass  = 'woocommerce-message';
                     $redirect_url = add_query_arg( array('msg'=> urlencode($message), 'type'=> $messageClass), $order->get_checkout_order_received_url() );
+                    wc_reduce_stock_levels($order->get_id());
                 } elseif ($response->transactionResponse->state == "PENDING") {
                     $transactionId = $response->transactionResponse->transactionId;
                     $this->saveTransactionId($order->get_id(), $transactionId);

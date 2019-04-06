@@ -149,7 +149,8 @@ class Woo_Payu_Latam_SDK_Plugin
                 'msjEmptyInputs' => __('Enter the card information','woo-payu-latam-sdk'),
                 'msjProcess' => __('Please wait...','woo-payu-latam-sdk'),
                 'msjReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk'),
-                'msjNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk')
+                'msjNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk'),
+                'msjNoCardValidate' => __('Card number invalid','woo-payu-latam-sdk')
             ) );
         }
     }
@@ -176,7 +177,9 @@ class Woo_Payu_Latam_SDK_Plugin
         foreach ($rows as $row) {
             $state = $payu_latam_sdk->getStatusTransaction($row->transactionid);
 
-            $order = new WC_Order($row->orderid);
+            $order_id = $row->orderid;
+
+            $order = new WC_Order($order_id);
 
             if (isset($state) && $order !== false && $state !== 'PENDING'){
 
@@ -184,6 +187,7 @@ class Woo_Payu_Latam_SDK_Plugin
                     $order->payment_complete($row->transactionid);
                     $order->add_order_note(sprintf(__('Successful payment (Transaction ID: %s)',
                         'woo-payu-latam-sdk'), $row->transactionid));
+                    wc_reduce_stock_levels($order_id);
                 }elseif ($state === 'DECLINED'){
                     $order->add_order_note(sprintf(__('Payment declined (Transaction ID: %s)',
                         'woo-payu-latam-sdk'), $row->transactionid));
