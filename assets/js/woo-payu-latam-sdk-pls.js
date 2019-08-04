@@ -5,15 +5,7 @@
     const form_card_payu_latam_sdk_pls = '#form-payu-latam-sdk';
 
     $( 'body' ).on( 'updated_checkout', function() {
-
-            if (checkout_form.find(form_card_payu_latam_sdk_pls).is(":visible"))
-            {
-                new Card({
-                    form: document.querySelector(form_card_payu_latam_sdk_pls),
-                    container: '.card-wrapper'
-                });
-            }
-
+        loadCard();
     } );
 
     $(document.body).on('checkout_error', function () {
@@ -30,11 +22,27 @@
             let card_cvv = checkout_form.find('#payu-latam-sdk-cvc').val();
             let installments =  checkout_form.find('#payu-latam-sdk-installments');
 
+            card_expire = card_expire.replace(/ /g, '');
+            card_expire = card_expire.split('/');
+            let month = card_expire[0];
+
+            if (month.length === 1) month = `0${month}`;
+
+            let date = new Date();
+            let year = date.getFullYear();
+            year = year.toString();
+            let lenYear = year.substr(0, 2);
+
+            let yearEnd = card_expire[1].length === 4 ? card_expire[1]  : lenYear + card_expire[1].substr(-2);
+
+            card_expire = `${month}/${yearEnd}`;
+
             checkout_form.append($('<input name="payu-latam-sdk-number" type="hidden" />' ).val( number_card ));
             checkout_form.append($('<input name="payu-latam-sdk-name" type="hidden" />' ).val( card_holder ));
             checkout_form.append($('<input name="payu-latam-sdk-payment-method" type="hidden" />' ).val( getTypeCard() ));
             checkout_form.append($('<input name="payu-latam-sdk-expiry" type="hidden" />' ).val( card_expire ));
             checkout_form.append($('<input name="payu-latam-sdk-cvc" type="hidden" />' ).val( card_cvv ));
+
             if (installments.length)
                 checkout_form.append($('<input name="payu-latam-sdk-installments" type="hidden" />' ).val( installments.val() ));
 
@@ -45,14 +53,16 @@
                 inputError.remove();
             }
 
-            if (!number_card || !card_holder || getTypeCard(checkout_form) === null || !card_expire || !card_cvv){
+            if (!number_card || !card_holder || getTypeCard() === undefined || !card_expire || !card_cvv){
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjEmptyInputs}">`);
             }else if (!checkCard()){
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoCard}">`);
             }else if ((installments.length && installments.val() === '')){
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoInstallments}">`);
-            }else if(!valid_credit_card(number_card)){
+            }else if (!valid_credit_card(number_card)){
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msjNoCardValidate}">`);
+            }else if (!validateDate(yearEnd, month)){
+                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgValidateDate}">`);
             }
         }
 
@@ -66,36 +76,37 @@
 
     });
 
+    function loadCard() {
+        if (checkout_form.find(form_card_payu_latam_sdk_pls).is(":visible"))
+        {
+            new Card({
+                form: document.querySelector(form_card_payu_latam_sdk_pls),
+                container: '.card-wrapper'
+            });
+        }
+    }
+
     function checkCard(){
         let countryCode = payu_latam_sdk_pls.country;
-        let classCard = $(".jp-card-identified" ).attr( "class" );
-        let inputCard = $("input[name=payu-latam-sdk-type]");
-
         let  isAcceptableCard = false;
 
         switch(true) {
-            case (classCard.indexOf('visa') !== -1 && countryCode !== 'PA'):
-                $(inputCard).val('VISA');
+            case (getTypeCard() === 'VISA' && countryCode !== 'PA'):
                 isAcceptableCard = true;
                 break;
-            case (classCard.indexOf('mastercard') !== -1):
-                $(inputCard).val('MASTERCARD');
+            case (getTypeCard() === 'MASTERCARD'):
                 isAcceptableCard = true;
                 break;
-            case (classCard.indexOf('amex') !== -1 && countryCode !== 'PA'):
-                $(inputCard).val('AMEX');
+            case (getTypeCard() === 'AMEX' && countryCode !== 'PA'):
                 isAcceptableCard = true;
                 break;
-            case (classCard.indexOf('diners') !== -1 && (countryCode !== 'MX' || countryCode !== 'PA') ):
-                $(inputCard).val('DINERS');
+            case (getTypeCard() === 'DINERS' && (countryCode !== 'MX' || countryCode !== 'PA')):
                 isAcceptableCard = true;
                 break;
-            case (classCard.indexOf('elo') !== -1 && countryCode === 'BR' ):
-                $(inputCard).val('ELO');
+            case (getTypeCard() === 'ELO' && countryCode === 'BR'):
                 isAcceptableCard = true;
                 break;
-            case (classCard.indexOf('hipercard') !== -1 && countryCode === 'BR' ):
-                $(inputCard).val('HIPERCARD');
+            case (getTypeCard() === 'HIPERCARD' && countryCode === 'BR'):
                 isAcceptableCard = true;
         }
 
@@ -104,15 +115,17 @@
     }
 
     function getTypeCard(){
-        let classCard = checkout_form.find(".jp-card-identified" ).attr( "class" );
 
-        if (typeof classCard === 'undefined')
-            return null;
+        let cardType;
 
-        let classTypeCard = classCard.split(' ');
-        let typeCard = classTypeCard[1].split('jp-card-');
+        const number_card = checkout_form.find('#payu-latam-sdk-number').val();
 
-        return typeCard[1].toUpperCase();
+        if(number_card){
+            cardType = Payment.fns.cardType(number_card);
+            cardType = cardType.toUpperCase();
+        }
+
+        return cardType;
     }
 
     function valid_credit_card(value) {
@@ -136,6 +149,15 @@
         }
 
         return (nCheck % 10) === 0;
+    }
+
+    function validateDate(yearEnd, month){
+
+        let date = new Date();
+        let currentMonth = ("0" + (date.getMonth() + 1)).slice(-2);
+        let year = date.getFullYear();
+
+        return (parseInt(yearEnd) > year) || (parseInt(yearEnd) === year && month >= currentMonth);
     }
 
 }(jQuery));

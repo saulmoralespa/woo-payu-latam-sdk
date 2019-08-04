@@ -1,41 +1,41 @@
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-04 14:28+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: \n"
-"Language: \n"
-"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+"PO-Revision-Date: 2019-08-04 14:34+0000\n"
+"Last-Translator: wpdev <cortuclas@gmail.com>\n"
+"Language-Team: Español\n"
+"Language: es_ES\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.2.0; wp-5.0.3"
+"X-Loco-Version: 2.3.0; wp-5.2.2"
 
 #: woo-payu-latam-sdk.php:51
 msgid "payU Latam SDK: Requires php version 5.6.0 or higher"
-msgstr ""
+msgstr "payU Latam SDK: Requiere php version 5.6.0 o superior"
 
 #: woo-payu-latam-sdk.php:59
 msgid ""
 "payU Latam SDK: Requires OpenSSL >= 1.0.1 to be installed on your server"
 msgstr ""
+"payU Latam SDK: Requiere que OpenSSL  >= 1.0.1 esté instalado en su servidor"
 
 #: woo-payu-latam-sdk.php:95
 msgid "payU Latam SDK: Woocommerce must be installed and active."
-msgstr ""
+msgstr "payU Latam SDK: Woocommerce debe estar instalado y activo"
 
 #: woo-payu-latam-sdk.php:105
 msgid ""
 "payU Latam SDK: Requires one of these currencies USD, BRL, COP, MXN, PEN "
-msgstr ""
+msgstr "payU Latam SDK: Requiere una de estas monedas USD, BRL, COP, MXN, PEN"
 
 #: woo-payu-latam-sdk.php:108 woo-payu-latam-sdk.php:124
 msgid "Click here to configure"
-msgstr ""
+msgstr "Haga clic aquí para configurar"
 
 #: woo-payu-latam-sdk.php:120
 msgid ""
@@ -43,10 +43,13 @@ msgid ""
 "countries\n"
 "             Argentina, Brazil, Colombia, Mexico, Panama and Peru "
 msgstr ""
+"payU Latam SDK: Requiere que el país de la tienda sea alguno de estos países."
+"\n"
+"              Argentina, Brasil, Colombia, México, Panamá o Perú"
 
 #: woo-payu-latam-sdk.php:138
 msgid "payU Latam SDK: the plugin is required "
-msgstr ""
+msgstr "payU Latam SDK: El plugin es requerido"
 
 #: woo-payu-latam-sdk.php:141
 msgid "WooCommerce Extra Checkout Fields for Brazil"
@@ -62,46 +65,46 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-boleto.php:16
 #: includes/class-woo-payu-latam-sdk-efecty.php:11
 msgid "cash payment"
-msgstr ""
+msgstr "pago en efectivo"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:12
 #: includes/class-woo-payu-latam-sdk-boleto.php:17
 #: includes/class-woo-payu-latam-sdk-efecty.php:12
 #: includes/class-gateway-woo-payu-latam-sdk.php:18
 msgid "Continue to payment"
-msgstr ""
+msgstr "Continuar con el pago"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:37
 #: includes/class-woo-payu-latam-sdk-boleto.php:42
 #: includes/class-woo-payu-latam-sdk-efecty.php:37
 #: includes/admin/payu-settings.php:63
 msgid "Enable/Disable"
-msgstr ""
+msgstr "Habilitar/Deshabilitar"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:39
 msgid "Enable Baloto"
-msgstr ""
+msgstr "Habilitar Baloto"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:43
 #: includes/class-woo-payu-latam-sdk-boleto.php:48
 #: includes/class-woo-payu-latam-sdk-efecty.php:43
 #: includes/admin/payu-settings.php:69
 msgid "Title"
-msgstr ""
+msgstr "Título"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:45
 #: includes/class-woo-payu-latam-sdk-boleto.php:50
 #: includes/class-woo-payu-latam-sdk-efecty.php:45
 #: includes/admin/payu-settings.php:71
 msgid "It corresponds to the title that the user sees during the checkout"
-msgstr ""
+msgstr "Corresponde al título que el usuario ve durante la compra"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:50
 #: includes/class-woo-payu-latam-sdk-boleto.php:55
 #: includes/class-woo-payu-latam-sdk-efecty.php:50
 #: includes/admin/payu-settings.php:76
 msgid "Description"
-msgstr ""
+msgstr "Descripción"
 
 #: includes/class-woo-payu-latam-sdk-baloto.php:52
 #: includes/class-woo-payu-latam-sdk-boleto.php:57
@@ -110,6 +113,7 @@ msgstr ""
 msgid ""
 "It corresponds to the description that the user will see during the checkout"
 msgstr ""
+"Corresponde a la descripción que el usuario verá durante el proceso de pago"
 
 #: includes/class-woo-payu-latam-sdk-boleto.php:15
 #: includes/class-woo-payu-latam-sdk-boleto.php:51
@@ -129,37 +133,37 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-plugin.php:195
 #, php-format
 msgid "Successful payment (Transaction ID: %s)"
-msgstr ""
+msgstr "Pago exitoso (ID de transacción: %s)"
 
 #: includes/class-woo-payu-latam-sdk.php:447
 #, php-format
 msgid "Pending approval (Transaction ID: %s)"
-msgstr ""
+msgstr "Aprobación pendiente (ID de transacción: %s)"
 
 #: includes/class-woo-payu-latam-sdk.php:451
 #, php-format
 msgid "Payment pending (Transaction ID: %s)"
-msgstr ""
+msgstr "Pago pendiente (ID de transacción: %s)"
 
 #: includes/class-woo-payu-latam-sdk.php:463
 msgid "Payment declined"
-msgstr ""
+msgstr "Pago rechazado"
 
 #: includes/class-woo-payu-latam-sdk.php:466
 #: includes/class-woo-payu-latam-sdk-plugin.php:199
 #, php-format
 msgid "Payment declined (Transaction ID: %s)"
-msgstr ""
+msgstr "Pago rechazado (ID de transacción: %s)"
 
 #: includes/class-woo-payu-latam-sdk.php:472
 msgid "Payment expired"
-msgstr ""
+msgstr "Pago vencido"
 
 #: includes/class-woo-payu-latam-sdk.php:475
 #: includes/class-woo-payu-latam-sdk-plugin.php:203
 #, php-format
 msgid "Payment expired (Transaction ID: %s)"
-msgstr ""
+msgstr "Pago vencido (ID de transacción: %s)"
 
 #: includes/class-woo-payu-latam-sdk.php:488
 #, php-format
@@ -168,55 +172,58 @@ msgid ""
 "id, Api Key, Apilogin. To perform tests use the credentials provided by payU "
 "%s Message error: %s code error: %s"
 msgstr ""
+"payU Latam SDK: verifique que haya ingresado correctamente merchant id, "
+"account id, Api Key, Apilogin. Para realizar pruebas use las credenciales "
+"proporcionadas por payU %s Mensaje de error: %s código de error: %s"
 
 #: includes/class-woo-payu-latam-sdk.php:489
 msgid "Click here to see"
-msgstr ""
+msgstr "Haga clic aquí para ver"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:108
 msgid "Settings"
-msgstr ""
+msgstr "Configuraciones"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:109
 msgid "Documentation"
-msgstr ""
+msgstr "Documentación"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:126
 msgid "DNI"
-msgstr ""
+msgstr "Documento Nacional de Identidad"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:127
 msgctxt "placeholder"
 msgid "Your DNI here...."
-msgstr ""
+msgstr "Su DNI aquí ..."
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:153
 msgid "The type of card is not accepted"
-msgstr ""
+msgstr "No se acepta el tipo de tarjeta"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:154
 msgid "Enter the card information"
-msgstr ""
+msgstr "Ingrese la información de la tarjeta"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:155
 msgid "Please wait..."
-msgstr ""
+msgstr "Espere por favor..."
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:156
 msgid "Redirecting to verify status..."
-msgstr ""
+msgstr "Redireccionando para verificar el estado..."
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:157
 msgid "Select the number of installments"
-msgstr ""
+msgstr "Seleccione el número de cuotas"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:158
 msgid "Card number invalid"
-msgstr ""
+msgstr "Número de tarjeta inválido"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:159
 msgid "Invalid card expiration date"
-msgstr ""
+msgstr "Fecha de vencimiento de la tarjeta inválida"
 
 #: includes/class-woo-payu-latam-sdk-efecty.php:10
 #: includes/class-woo-payu-latam-sdk-efecty.php:46
@@ -226,7 +233,7 @@ msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-efecty.php:39
 msgid "Enable Efecty"
-msgstr ""
+msgstr "Habilitar Efecty"
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:15
 msgid "Payu Latam"
@@ -242,30 +249,32 @@ msgid ""
 "Could not perform any tests, because you have not entered all the required "
 "fields"
 msgstr ""
+"No se pudieron realizar pruebas porque no ha ingresado todos los campos "
+"requeridos"
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:93
 msgid "Data of card"
-msgstr ""
+msgstr "Datos de la tarjeta"
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:94
 msgid "Card number"
-msgstr ""
+msgstr "Número de tarjeta"
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:95
 msgid "Cardholder"
-msgstr ""
+msgstr "Titular de la tarjeta"
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:101
 msgid "Number of installments"
-msgstr ""
+msgstr "Numero de cuotas"
 
 #: includes/admin/payu-settings.php:59
 msgid "For tests use the credentials provided by payU latam"
-msgstr ""
+msgstr "Para las pruebas use las credenciales proporcionadas por payU latam"
 
 #: includes/admin/payu-settings.php:65
 msgid "Enable Payu Latam SDK"
-msgstr ""
+msgstr "Activar payU latam SDk"
 
 #: includes/admin/payu-settings.php:83
 msgid "Debug"
@@ -273,27 +282,27 @@ msgstr ""
 
 #: includes/admin/payu-settings.php:85
 msgid "Debug records, it is saved in payment log"
-msgstr ""
+msgstr "Registros de depuración, se guarda en el registro de pagos."
 
 #: includes/admin/payu-settings.php:89
 msgid "Credentials"
-msgstr ""
+msgstr "Credenciales"
 
 #: includes/admin/payu-settings.php:94
 msgid "Environment"
-msgstr ""
+msgstr "Ambiente"
 
 #: includes/admin/payu-settings.php:97
 msgid "Enable to run tests"
-msgstr ""
+msgstr "Habilitar para ejecutar pruebas"
 
 #: includes/admin/payu-settings.php:101
 msgid "Production"
-msgstr ""
+msgstr "Producción"
 
 #: includes/admin/payu-settings.php:102
 msgid "Test"
-msgstr ""
+msgstr "Pruebas"
 
 #: includes/admin/payu-settings.php:106
 msgid "Merchant id"
@@ -329,31 +338,31 @@ msgstr ""
 
 #: includes/admin/payu-settings.php:136
 msgid "Installments number"
-msgstr ""
+msgstr "Numero de cuotas"
 
 #: includes/admin/payu-settings.php:138
 msgid "The maximum number of installments that the user can select"
-msgstr ""
+msgstr "El número máximo de cuotas que el usuario puede seleccionar"
 
 #: includes/admin/payu-settings.php:141
 msgid "Installments"
-msgstr ""
+msgstr "Cuotas"
 
 #: includes/admin/payu-settings.php:146
 msgid "Discount for card"
-msgstr ""
+msgstr "Descuento por tarjeta"
 
 #: includes/admin/payu-settings.php:151
 msgid "Cards numbers"
-msgstr ""
+msgstr "Números de tarjetas"
 
 #: includes/admin/payu-settings.php:154
 msgid "Add card numbers"
-msgstr ""
+msgstr "Agregar números de tarjeta"
 
 #: includes/admin/payu-settings.php:161
 msgid "Discount percentage"
-msgstr ""
+msgstr "Porcentaje de descuento"
 
 #: includes/admin/payu-settings.php:163
 msgid "The discount percentage"

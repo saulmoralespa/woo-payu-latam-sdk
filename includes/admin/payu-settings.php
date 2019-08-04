@@ -6,6 +6,56 @@
  * Time: 09:04 AM
  */
 
+$settings = get_option('woocommerce_payu_latam_sdk_pls_settings' );
+$cards_numbers = strpos($settings['cards_numbers_data'], ',') ?
+    explode(',', $settings['cards_numbers_data']) :  [$settings['cards_numbers_data']];
+
+$options_select = !empty($cards_numbers) ? "
+
+let vals = ['" . implode("','", $cards_numbers) . "'];
+    
+    vals.forEach(function(e){
+    if(!s2.find('option:contains(' + e + ')').length) 
+    s2.append($('<option>').text(e));
+    });
+    
+    s2.val(vals).trigger(\"change\");
+": '';
+
+
+wc_enqueue_js( "
+    jQuery( function( $ ) {
+    
+    $('form').submit(function(){
+	
+	let cards_numbers = $('#woocommerce_payu_latam_sdk_pls_cards_numbers').val();
+	cards_numbers = cards_numbers ? cards_numbers.join(',') : '';
+	$('#woocommerce_payu_latam_sdk_pls_cards_numbers_data').val(cards_numbers);
+	});
+    
+    let s2 = $('#woocommerce_payu_latam_sdk_pls_cards_numbers').select2({
+    tags: true,
+    multiple: true,
+    createTag: function (params) {
+    let term = $.trim(params.term);
+    term = term.replace(/ /g, '');
+
+    if (term === '' || isNaN(term) || term.length !== 6) {
+      return null;
+    }
+
+    return {
+      id: term,
+      text: term,
+      newTag: true
+    }
+  }
+    }); 
+    
+    " . $options_select . "
+});	
+");
+
 $credentials = '<a target="_blank" href="' . esc_url('http://developers.payulatam.com/es/sdk/sandbox.html') . '">' . __( 'For tests use the credentials provided by payU latam', 'woo-payu-latam-sdk' ) . '</a>';
 
 return array(
@@ -50,7 +100,7 @@ return array(
         'options'     => array(
             false    => __( 'Production', 'woo-payu-latam-sdk' ),
             true => __( 'Test', 'woo-payu-latam-sdk' ),
-        ),
+        )
     ),
     'merchant_id' => array(
         'title' => __('Merchant id', 'woo-payu-latam-sdk'),
@@ -91,5 +141,26 @@ return array(
         'title' => __('Installments', 'woo-payu-latam-sdk'),
         'type' => 'number',
         'default' => '1',
+    ),
+    'discount_for_cards' => array(
+        'title'       => __( 'Discount for card', 'woo-payu-latam-sdk'),
+        'type'        => 'title',
+        'description' => '',
+    ),
+    'cards_numbers' => array(
+        'title' => __('Cards numbers', 'woo-payu-latam-sdk'),
+        'type'        => 'select',
+        'class'       => 'wc-enhanced-select',
+        'description' => __('Add card numbers', 'woo-payu-latam-sdk'),
+        'desc_tip' => true
+    ),
+    'cards_numbers_data' => array(
+        'type'        => 'hidden'
+    ),
+    'discount_rate_card_number' => array(
+        'title' => __('Discount percentage', 'woo-payu-latam-sdk'),
+        'type'        => 'number',
+        'description' => __('The discount percentage', 'woo-payu-latam-sdk'),
+        'desc_tip' => true
     )
 );

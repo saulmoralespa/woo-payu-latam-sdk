@@ -89,7 +89,9 @@ class Woo_Payu_Latam_SDK_Plugin
     {
         require_once ($this->includes_path . 'class-gateway-woo-payu-latam-sdk.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk.php');
+        require_once ($this->includes_path . 'class-woo-payu-latam-sdk-baloto.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk-boleto.php');
+        require_once ($this->includes_path . 'class-woo-payu-latam-sdk-efecty.php');
         if (!class_exists('PayU'))
             require_once ($this->lib_path . 'PayU.php');
 
@@ -111,7 +113,9 @@ class Woo_Payu_Latam_SDK_Plugin
     public function woocommerce_payu_latam_sdk_add_gateway($methods)
     {
         $methods[] = 'WC_Payment_Payu_Latam_SDK_PLS';
+        $methods[] = 'WC_Payment_Payu_Latam_SDK_Baloto_PLSB';
         $methods[] = 'WC_Payment_Payu_Latam_SDK_Boleto_PLSB';
+        $methods[] = 'WC_Payment_Payu_Latam_SDK_Efecty_PLSE';
         return $methods;
     }
 
@@ -143,15 +147,18 @@ class Woo_Payu_Latam_SDK_Plugin
             wp_enqueue_script( 'payu-latam-sdk-pls', $this->plugin_url . 'assets/js/woo-payu-latam-sdk-pls.js', array( 'jquery' ), $this->version, true );
             wp_enqueue_script( 'payu-latam-sdk-pls-card', $this->plugin_url . 'assets/js/card.js', array( 'jquery' ), $this->version, true );
 
-            wp_localize_script( 'payu-latam-sdk-pls', 'payu_latam_sdk_pls', array(
-                'country' => WC()->countries->get_base_country(),
-                'msjNoCard' => __('The type of card is not accepted','woo-payu-latam-sdk'),
-                'msjEmptyInputs' => __('Enter the card information','woo-payu-latam-sdk'),
-                'msjProcess' => __('Please wait...','woo-payu-latam-sdk'),
-                'msjReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk'),
-                'msjNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk'),
-                'msjNoCardValidate' => __('Card number invalid','woo-payu-latam-sdk')
-            ) );
+            wp_localize_script( 'payu-latam-sdk-pls', 'payu_latam_sdk_pls',
+                [
+                    'country' => WC()->countries->get_base_country(),
+                    'msjNoCard' => __('The type of card is not accepted','woo-payu-latam-sdk'),
+                    'msjEmptyInputs' => __('Enter the card information','woo-payu-latam-sdk'),
+                    'msjProcess' => __('Please wait...','woo-payu-latam-sdk'),
+                    'msjReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk'),
+                    'msjNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk'),
+                    'msjNoCardValidate' => __('Card number invalid','woo-payu-latam-sdk'),
+                    'msgValidateDate' => __('Invalid card expiration date','woo-payu-latam-sdk')
+                ]
+            );
         }
     }
 

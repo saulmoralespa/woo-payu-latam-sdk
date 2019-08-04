@@ -3,9 +3,9 @@ Contributors: saulmorales
 Donate link: https://saulmoralespa.com/
 Tags: commerce, e-commerce, commerce, wordpress ecommerce, store, sales, sell, shop, shopping, cart, checkout, configurable, payu, latam, Argentina, Brasil, Colombia, México, Panamá, Perú
 Requires at least: 5.0
-Tested up to: 5.1
+Tested up to: 5.2
 Requires PHP: 5.6.0
-Stable tag: 1.0.1
+Stable tag: 1.0.3
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -43,6 +43,10 @@ Si. But it is advisable that you consider using it since it is revealing for bro
 * Initial stable release
 = 1.0.1 =
 * Refactor, added card verification
+= 1.0.2 =
+* Added validate date
+= 1.0.3 =
+* Added baloto and efecty Colombia
 
 == Additional Info ==
 **Contribute** [repository on github](https://github.com/saulmoralespa/woo-payu-latam-sdk)

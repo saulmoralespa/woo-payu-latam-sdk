@@ -9,7 +9,7 @@
 class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 {
     public $testCheck;
-    public $dataPayment = array();
+    public $dataPayment = [];
     public $buyerName;
     public $paymentMethod;
 
@@ -18,7 +18,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         parent::__construct();
     }
 
-    public function doPayment(array $params = array(), $test = true)
+    public function doPayment(array $params = [], $test = true)
     {
 
         $this->testCheck = $test;
@@ -46,39 +46,49 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $parametersCard = $this->prepareDataCard($params);
                 $this->buyerName   = $parametersCard['card_name'];
             }else{
-                $this->buyerName = empty($order->get_billing_first_name()) ? $order->get_shipping_first_name() . " " . $order->get_shipping_last_name() : $order->get_billing_first_name() . " " . $order->get_billing_first_name();
+                $this->buyerName = empty($order->get_billing_first_name()) ? $order->get_shipping_first_name() .
+                    " " . $order->get_shipping_last_name() : $order->get_billing_first_name() . " " . $order->get_billing_first_name();
             }
 
         }
 
-
         if ($this->testCheck || (isset($params) && !$this->isCash())){
-            $parameters = array_merge($this->paramsBasicPayu(), $this->paramsBuyerPayu(false), $this->paramsPayerPayu(), $this->paramsLeftoverPayu(),
-                array(
+            $parameters = array_merge($this->paramsBasicPayu($parametersCard),
+                $this->paramsBuyerPayu(false), $this->paramsPayerPayu(),
+                $this->paramsLeftoverPayu(),
+                [
                     PayUParameters::CREDIT_CARD_NUMBER => $parametersCard['card_number'],
                     PayUParameters::CREDIT_CARD_EXPIRATION_DATE => $parametersCard['card_expire'],
                     PayUParameters::CREDIT_CARD_SECURITY_CODE=> $parametersCard['cvc'],
                     PayUParameters::INSTALLMENTS_NUMBER => isset($params['payu-latam-sdk-installments']) ? $params['payu-latam-sdk-installments'] : $this->installments
-                )
+                ]
             );
         }
-
 
         if ($this->testCheck || (isset($params) && !$this->isCash())
             && $country !== 'BR'){
             $parameters = array_merge(
                 $parameters,
-                array(
+                [
                     PayUParameters::DEVICE_SESSION_ID => md5(session_id().microtime()),
                     PayUParameters::PAYER_COOKIE => md5(session_id().microtime()),
                     PayUParameters::USER_AGENT => $_SERVER['HTTP_USER_AGENT']
-                )
+                ]
             );
         }
 
         if (isset($params) && $this->paymentMethod === 'BOLETO_BANCARIO'){
             $parameters = array_merge($this->paramsBasicPayu(),
                 $this->paramsBuyerPayu(false),
+                $this->paramsPayerPayu(),
+                $this->paramsLeftoverPayu(),
+                $this->paramExpirePayu()
+            );
+        }
+
+        if (isset($params) && ($this->paymentMethod === 'BALOTO' || $this->paymentMethod === 'EFECTY')){
+            $parameters = array_merge($this->paramsBasicPayu(),
+                $this->paramsBuyerPayu(true),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
                 $this->paramExpirePayu()
@@ -114,34 +124,26 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             $card_number = "5529998177229339";
             $card_type  = "MASTERCARD";
             $card_name = "Pedro Perez";
-            $datecaduce = date('Y/m', strtotime('+1 years'));
+            $card_expire = date('Y/m', strtotime('+1 years'));
             $cvc = "808";
         }else{
             $card_number = $params['payu-latam-sdk-number'];
             $card_number = str_replace(' ','', $card_number);
             $card_name = $params['payu-latam-sdk-name'];
             $card_type = $params['payu-latam-sdk-payment-method'];
-            $card_expire = $params['payu-latam-sdk-expiry'];
             $cvc = $params['payu-latam-sdk-cvc'];
 
-            $year = date('Y');
-            $lenyear = substr($year, 0,2);
-            $expires = str_replace(' ', '', $card_expire);
-            $expire = explode('/', $expires);
-            $month = $expire[0];
-            if (strlen($month) == 1) $month = '0' . $month;
-
-            $yearEnd =  strlen($expire[1]) == 4 ? $expire[1] :  $lenyear . substr($expire[1], -2);
-            $datecaduce = $yearEnd . "/" . $month;
+            $card_expire = explode('/', $params['payu-latam-sdk-expiry']);
+            $card_expire = $card_expire[1] . "/" . $card_expire[0];
         }
 
-        $data = array(
+        $data = [
             'card_number' => $card_number,
             'card_name' => $card_name,
             'payu-latam-sdk-payment-method' => $card_type,
-            'card_expire' => $datecaduce,
+            'card_expire' => $card_expire,
             'cvc' => $cvc
-        );
+        ];
 
         return $data;
     }
@@ -153,17 +155,17 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
         $wpdb->insert(
             $table_name,
-            array(
+            [
                 'orderid' => $order_id,
                 'transactionid' => $transactionId,
-            )
+            ]
         );
 
     }
 
     public function dataOrder($order = null)
     {
-        $data = array();
+        $data = [];
 
         if ($order === null){
 
@@ -198,7 +200,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     public function paymentsCash()
     {
-        return array(
+        return [
             //Argentina
             "COBRO_EXPRESS",
             "PAGOFACIL",
@@ -217,7 +219,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             "OXXO",
             "SEVEN_ELEVEN",
             "OTHERS_CASH_MX"
-        );
+        ];
     }
 
     public function getCountryPayu()
@@ -256,16 +258,21 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         return $lang;
     }
 
-    public function paramsBasicPayu()
+    public function paramsBasicPayu(array $paramsCard = array())
     {
-        $params = array(
+
+        $six_fist_numbers_card = !empty($paramsCard) ? substr($paramsCard['card_number'], -0, 6) : '';
+        $discount = $this->dataPayment['total'] - ($this->dataPayment['total'] * ($this->discount_rate_card_number / 100));
+        $total = in_array($six_fist_numbers_card, $this->cards_numbers) ? $discount : $this->dataPayment['total'];
+
+        $params = [
             PayUParameters::ACCOUNT_ID => $this->account_id,
             PayUParameters::REFERENCE_CODE => $this->dataPayment['reference'],
             PayUParameters::DESCRIPTION => $this->dataPayment['description'],
-            PayUParameters::VALUE => $this->dataPayment['total'],
+            PayUParameters::VALUE => $total,
             PayUParameters::CURRENCY => $this->getCurrency(),
             PayUParameters::NOTIFY_URL => $this->getUrlNotify()
-        );
+        ];
 
         return $params;
     }
@@ -273,7 +280,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
     public function paramsBuyerPayu($onlyEmail = true)
     {
 
-        $params = array(
+        $params = [
             PayUParameters::BUYER_NAME => $this->buyerName,
             PayUParameters::BUYER_EMAIL => $this->dataPayment['email'],
             PayUParameters::BUYER_CONTACT_PHONE => $this->dataPayment['phone'],
@@ -285,12 +292,12 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             PayUParameters::BUYER_COUNTRY => woo_payu_latam_sdk_pls()->getDefaultCountry(),
             PayUParameters::BUYER_POSTAL_CODE => $this->dataPayment['postalCode'],
             PayUParameters::BUYER_PHONE => $this->dataPayment['phone']
-        );
+        ];
 
         if ($onlyEmail)
-            return array(
+            return [
                 PayUParameters::BUYER_EMAIL => $this->dataPayment['email']
-            );
+            ];
 
         return $params;
 
@@ -301,12 +308,11 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
             && !$this->isCash())
-            return array(
+            return [
                 PayUParameters::PAYER_NAME => ($this->testCheck || $this->isTest) ? "APPROVED" :  $this->buyerName,
-            );
+            ];
 
-
-        $params = array(
+        $params = [
             PayUParameters::PAYER_NAME => ($this->testCheck || $this->isTest) ? "APPROVED" :  $this->buyerName,
             PayUParameters::PAYER_EMAIL => $this->dataPayment['email'],
             PayUParameters::PAYER_CONTACT_PHONE => $this->dataPayment['phone'],
@@ -318,7 +324,15 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             PayUParameters::PAYER_COUNTRY => woo_payu_latam_sdk_pls()->getDefaultCountry(),
             PayUParameters::PAYER_POSTAL_CODE => $this->dataPayment['postalCode'],
             PayUParameters::PAYER_PHONE => $this->dataPayment['phone']
-        );
+        ];
+
+        if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'CO'
+            && $this->isCash()){
+            return array_merge(
+                $params[0],
+                $params[3]
+            );
+        }
 
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
             && $this->isCash()){
@@ -327,6 +341,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             unset($params[3]);
             unset($params[10]);
         }
+
         return $params;
     }
 
@@ -337,7 +352,6 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             PayUParameters::COUNTRY => $this->getCountryPayu(),
             PayUParameters::PAYMENT_METHOD => $this->paymentMethod,
             PayUParameters::IP_ADDRESS => $this->getIP()
-
         );
 
         return $params;
@@ -346,9 +360,9 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     public function paramExpirePayu()
     {
-        return array(
+        return [
             PayUParameters::EXPIRATION_DATE => $this->dateExpire()
-        );
+        ];
     }
 
     public function isCash()
@@ -428,7 +442,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $message   = sprintf(__('Successful payment (Transaction ID: %s)', 'woo-payu-latam-sdk'),
                         $transactionId);
                     $messageClass  = 'woocommerce-message';
-                    $redirect_url = add_query_arg( array('msg'=> urlencode($message), 'type'=> $messageClass), $order->get_checkout_order_received_url() );
+                    $redirect_url = add_query_arg(['msg'=> urlencode($message), 'type'=> $messageClass], $order->get_checkout_order_received_url());
                     wc_reduce_stock_levels($order->get_id());
                 } elseif ($response->transactionResponse->state == "PENDING") {
                     $transactionId = $response->transactionResponse->transactionId;
@@ -441,10 +455,11 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                         $message = sprintf(__('Payment pending (Transaction ID: %s)', 'woo-payu-latam-sdk'),
                             $transactionId);
                         $messageClass  = 'woocommerce-info';
-                        $redirect_url = add_query_arg(array('msg' => urlencode($message), 'type' => $messageClass),
+                        $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                             $order->get_checkout_order_received_url());
-                    }elseif ($this->paymentMethod === 'BOLETO_BANCARIO'){
-                        $redirect_url = $response->transactionResponse->extraParameters->URL_BOLETO_BANCARIO;
+                    }else{
+                        $redirect_url = $response->transactionResponse->extraParameters->URL_BOLETO_BANCARIO ??
+                            $response->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML;
                         $aprovved   = true;
                     }
                 } elseif ($response->transactionResponse->state == "DECLINED") {
@@ -454,7 +469,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $order->update_status('failed');
                     $order->add_order_note(sprintf(__('Payment declined (Transaction ID: %s)',
                         'woo-payu-latam-sdk'), $transactionId));
-                    $redirect_url = add_query_arg(array('msg' => urlencode($message), 'type' => $messageClass),
+                    $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
                 } elseif ($response->transactionResponse->state == "EXPIRED") {
                     $transactionId = $response->transactionResponse->transactionId;
@@ -463,11 +478,11 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $order->update_status('failed');
                     $order->add_order_note(sprintf(__('Payment expired (Transaction ID: %s)', 'woo-payu-latam-sdk'),
                         $transactionId));
-                    $redirect_url = add_query_arg(array('msg' => urlencode($message), 'type' => $messageClass),
+                    $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
                 }
 
-                return array('status' => $aprovved, 'url' => $redirect_url);
+                return ['status' => $aprovved, 'url' => $redirect_url];
 
             }
 
@@ -480,11 +495,11 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             }else{
                 woo_payu_latam_sdk_pls()->log($ex->getMessage());
                 woo_payu_latam_sdk_pls()->log($parameters);
-                return array('status' => false, 'message' => $ex->getMessage());
+                return ['status' => false, 'message' => $ex->getMessage()];
             }
         }
 
-        return array('status' => false, 'message' => __('Not processed payment'));
+        return ['status' => false, 'message' => __('Not processed payment')];
     }
 
 }

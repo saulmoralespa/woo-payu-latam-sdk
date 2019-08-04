@@ -17,7 +17,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->description  = $this->get_option( 'description' );
         $this->order_button_text = __('Continue to payment', 'woo-payu-latam-sdk');
         $this->has_fields = false;
-        $this->supports = array('products');
+        $this->supports = ['products'];
         $this->init_form_fields();
         $this->init_settings();
         $this->title = $this->get_option('title');
@@ -29,9 +29,13 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->isTest = (boolean)$this->get_option('environment');
         $installments = (int)$this->get_option('installments');
 
-        if ($installments < 1){
+        $this->cards_numbers = strpos($this->get_option('cards_numbers_data'), ',') ?
+            explode(',', $this->get_option('cards_numbers_data')) :  [$this->get_option('cards_numbers_data')];
+
+        $this->discount_rate_card_number = (int)$this->get_option('discount_rate_card_number');
+
+        if ($installments < 1)
             $this->update_option('installments', '1');
-        }
 
         $this->installments = $this->get_option('installments');
 
@@ -126,10 +130,10 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
 
         if($data['status']){
             WC()->cart->empty_cart();
-            return array(
+            return [
                 'result' => 'success',
                 'redirect' => $data['url']
-            );
+            ];
         }else{
             wc_add_notice($data['message'], 'error' );
             woo_payu_latam_sdk_pls()->log($data['message']);
