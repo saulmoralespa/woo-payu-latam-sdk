@@ -328,10 +328,10 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'CO'
             && $this->isCash()){
-            return array_merge(
-                $params[0],
-                $params[3]
-            );
+            return [
+                PayUParameters::PAYER_NAME => ($this->testCheck || $this->isTest) ? "APPROVED" :  $this->buyerName,
+                PayUParameters::PAYER_DNI => $this->dataPayment['dni']
+            ];
         }
 
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'BR'
@@ -376,19 +376,15 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         $today = $this->dateCurrent();
         $day = $this->getDay();
 
-        $addDay = 0;
+        $addDay = 1;
 
-        if ($day == 0)
-            $addDay += 1;
         if ($day == 5)
-            $addDay += 3;
-        if ($day == 6)
             $addDay += 2;
+        if ($day == 6)
+            $addDay += 1;
 
-        if($addDay > 0){
-            $today = strtotime ( "+$addDay days" , strtotime ( $today ) );
-            $today = date ( PayUConfig::PAYU_DATE_FORMAT , $today );
-        }
+        $today = strtotime ( "+$addDay days" , strtotime ( $today ) );
+        $today = date ( PayUConfig::PAYU_DATE_FORMAT , $today );
 
         return $today;
 
