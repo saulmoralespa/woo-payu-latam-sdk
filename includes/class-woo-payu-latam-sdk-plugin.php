@@ -92,6 +92,7 @@ class Woo_Payu_Latam_SDK_Plugin
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk-baloto.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk-boleto.php');
         require_once ($this->includes_path . 'class-woo-payu-latam-sdk-efecty.php');
+        require_once ($this->includes_path . 'class-woo-payu-latam-sdk-pse.php');
         if (!class_exists('PayU'))
             require_once ($this->lib_path . 'PayU.php');
 
@@ -116,12 +117,32 @@ class Woo_Payu_Latam_SDK_Plugin
         $methods[] = 'WC_Payment_Payu_Latam_SDK_Baloto_PLSB';
         $methods[] = 'WC_Payment_Payu_Latam_SDK_Boleto_PLSB';
         $methods[] = 'WC_Payment_Payu_Latam_SDK_Efecty_PLSE';
+        $methods[] = 'WC_Payment_Payu_Latam_SDK_PSE_PLSPSE';
         return $methods;
     }
 
     public function custom_woocommerce_billing_fields($fields)
     {
         if ($this->getDefaultCountry() !== 'BR' && $this->get_available_payment()) {
+
+            $fields['billing_type_document'] = array(
+                'label'       => __('Tipo de documento', 'woo-payu-latam-sdk'),
+                'placeholder' => _x('', 'placeholder', 'woo-payu-latam-sdk'),
+                'required'    => true,
+                'clear'       => false,
+                'type'        => 'select',
+                'default' => 'CC',
+                'options'     => array(
+                    'CC' => __('Cédula de ciudadanía' ),
+                    'CE' => __('Cédula de extranjería'),
+                    'CEL' => __('En caso de identificarse a través de la línea del móvil'),
+                    'DE' => __('Documento de identificación extranjero'),
+                    'PP' => __('Pasaporte'),
+                    'NIT' => __('(NIT) Número de indentificación tributaria'),
+                    'TI' => __('Tarjeta de identidad')
+                )
+            );
+
             $fields['billing_dni'] = array(
                 'label' => __('DNI', 'woo-payu-latam-sdk'),
                 'placeholder' => _x('Your DNI here....', 'placeholder', 'woo-payu-latam-sdk'),
@@ -150,13 +171,15 @@ class Woo_Payu_Latam_SDK_Plugin
             wp_localize_script( 'payu-latam-sdk-pls', 'payu_latam_sdk_pls',
                 [
                     'country' => WC()->countries->get_base_country(),
-                    'msjNoCard' => __('The type of card is not accepted','woo-payu-latam-sdk'),
-                    'msjEmptyInputs' => __('Enter the card information','woo-payu-latam-sdk'),
-                    'msjProcess' => __('Please wait...','woo-payu-latam-sdk'),
-                    'msjReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk'),
-                    'msjNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk'),
-                    'msjNoCardValidate' => __('Card number invalid','woo-payu-latam-sdk'),
-                    'msgValidateDate' => __('Invalid card expiration date','woo-payu-latam-sdk')
+                    'msgNoCard' => __('The type of card is not accepted','woo-payu-latam-sdk'),
+                    'msgEmptyInputs' => __('Enter the card information','woo-payu-latam-sdk'),
+                    'msgProcess' => __('Please wait...','woo-payu-latam-sdk'),
+                    'msgReturn' => __('Redirecting to verify status...','woo-payu-latam-sdk'),
+                    'msgNoInstallments' => __('Select the number of installments','woo-payu-latam-sdk'),
+                    'msgNoCardValidate' => __('Card number invalid','woo-payu-latam-sdk'),
+                    'msgValidateDate' => __('Invalid card expiration date','woo-payu-latam-sdk'),
+                    'msgBank' => __('Select a bank','woo-payu-latam-sdk'),
+                    'msgPersonType' => __('Select a type of person','woo-payu-latam-sdk')
                 ]
             );
         }

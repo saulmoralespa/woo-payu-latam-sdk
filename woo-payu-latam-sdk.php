@@ -2,7 +2,7 @@
 /*
 Plugin Name: Woo payU latam SDK
 Description: payU latam  use sdk.
-Version: 1.0.4
+Version: 1.0.5
 Author: Saul Morales Pacheco
 Author URI: https://saulmoralespa.com
 License: GNU General Public License v3.0
@@ -16,7 +16,7 @@ WC requires at least: 2.6
 if (!defined( 'ABSPATH' )) exit;
 
 if(!defined('WOO_PAYU_LATAM_SDK_PLS_VERSION')){
-    define('WOO_PAYU_LATAM_SDK_PLS_VERSION', '1.0.4');
+    define('WOO_PAYU_LATAM_SDK_PLS_VERSION', '1.0.5');
 }
 
 if(!defined('WOO_PAYU_LATAM_SDK_PLS_NAME')){

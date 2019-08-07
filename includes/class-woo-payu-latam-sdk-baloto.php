@@ -56,6 +56,16 @@ class WC_Payment_Payu_Latam_SDK_Baloto_PLSB extends WC_Payment_Gateway
         ];
     }
 
+    public function admin_options()
+    {
+        ?>
+        <h3><?php echo $this->title; ?></h3>
+        <p><?php echo $this->method_description; ?></p>
+        <table class="form-table">
+            <?php $this->generate_settings_html(); ?>
+        </table>
+        <?php
+    }
 
     public function process_payment($order_id)
     {

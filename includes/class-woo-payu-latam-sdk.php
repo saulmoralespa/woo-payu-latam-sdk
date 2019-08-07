@@ -35,19 +35,17 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
         if (!empty($params)){
 
-            $order_id    = $params['id_order'];
-            $order       = new WC_Order($order_id);
+            $order_id = $params['id_order'];
+            $order = new WC_Order($order_id);
 
             $this->dataPayment = $this->dataOrder($order);
             $this->paymentMethod = $params['payu-latam-sdk-payment-method'];
 
-
             if (!in_array($this->paymentMethod, $this->paymentsCash())){
                 $parametersCard = $this->prepareDataCard($params);
-                $this->buyerName   = $parametersCard['card_name'];
+                $this->buyerName = $parametersCard['card_name'];
             }else{
-                $this->buyerName = empty($order->get_billing_first_name()) ? $order->get_shipping_first_name() .
-                    " " . $order->get_shipping_last_name() : $order->get_billing_first_name() . " " . $order->get_billing_first_name();
+               $this->buyerName = $this->dataPayment['name'];
             }
 
         }
@@ -78,7 +76,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         }
 
         if (isset($params) && $this->paymentMethod === 'BOLETO_BANCARIO'){
-            $parameters = array_merge($this->paramsBasicPayu(),
+            $parameters = array_merge(
+                $this->paramsBasicPayu(),
                 $this->paramsBuyerPayu(false),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
@@ -87,11 +86,29 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         }
 
         if (isset($params) && ($this->paymentMethod === 'BALOTO' || $this->paymentMethod === 'EFECTY')){
-            $parameters = array_merge($this->paramsBasicPayu(),
+            $parameters = array_merge(
+                $this->paramsBasicPayu(),
                 $this->paramsBuyerPayu(true),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
                 $this->paramExpirePayu()
+            );
+        }
+
+        if ($this->paymentMethod === 'PSE'){
+            $parameters = array_merge(
+                $this->paramsBasicPayu(),
+                $this->paramsBuyerPayu(true),
+                $this->paramsPayerPayu(),
+                $this->paramsLeftoverPayu(),
+                [
+                    PayUParameters::PAYER_COOKIE => md5(session_id().microtime()),
+                    PayUParameters::USER_AGENT => $_SERVER['HTTP_USER_AGENT'],
+                    PayUParameters::PSE_FINANCIAL_INSTITUTION_CODE => $params['banks_payu_latam_colombia'],
+                    PayUParameters::PAYER_PERSON_TYPE => $params['person_type_payu_latam_colombia'],
+                    PayUParameters::PAYER_DOCUMENT_TYPE => $params['billing_type_document'],
+                    PayUParameters::RESPONSE_URL => get_bloginfo( 'url' )
+                ]
             );
         }
 
@@ -185,12 +202,13 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             $data['reference'] = $order->get_order_key() . '-' . time();
             $data['total'] = $order->get_total();
             $data['description'] = "Order " . $order->get_id();
+            $data['name'] = $order->get_shipping_first_name() ? $order->get_shipping_first_name() . " " . $order->get_shipping_last_name() : $order->get_billing_first_name() . " " . $order->get_billing_last_name();
             $data['email'] = $order->get_billing_email();
             $data['phone'] = $order->get_billing_phone();
-            $data['city'] = $order->get_billing_city();
-            $data['state'] = $order->get_billing_state();
-            $data['street'] = $order->get_billing_address_1();
-            $data['street2'] = empty($order->get_billing_address_2()) ? $order->get_billing_address_1() : $order->get_billing_address_2();
+            $data['city'] = $order->get_shipping_city() ? $order->get_shipping_city() : $order->get_billing_city();
+            $data['state'] =  $order->get_shipping_state() ?  $order->get_shipping_state() : $order->get_billing_state();
+            $data['street'] = $order->get_shipping_address_1() ? $order->get_shipping_address_1() : $order->get_billing_address_1();
+            $data['street2'] = $order->get_shipping_address_1() ? $order->get_shipping_address_1() . " " . $order->get_shipping_address_2() : $order->get_billing_address_1() . " " . $order->get_billing_address_2();
             $data['postalCode'] = empty($order->get_billing_postcode()) ? '000000' : $order->get_billing_postcode();
             $data['dni'] = empty(get_post_meta( $order->get_id(), '_billing_dni', true )) ? get_post_meta( $order->get_id(), '_billing_cpf', true ) : get_post_meta( $order->get_id(), '_billing_dni', true );
         }
@@ -212,6 +230,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             //Colombia
             "BALOTO",
             "EFECTY",
+            "PSE",
             //Mexico
             "SANTANDER",
             "SCOTIABANK",
@@ -327,7 +346,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         ];
 
         if (woo_payu_latam_sdk_pls()->getDefaultCountry() === 'CO'
-            && $this->isCash()){
+            && $this->isCash() && $this->paymentMethod !== 'PSE'){
             return [
                 PayUParameters::PAYER_NAME => ($this->testCheck || $this->isTest) ? "APPROVED" :  $this->buyerName,
                 PayUParameters::PAYER_DNI => $this->dataPayment['dni']
@@ -413,13 +432,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
     public function executePayment(array $parameters, $order = null)
     {
 
-        PayU::$apiKey = $this->apikey;
-        PayU::$apiLogin = $this->apilogin;
-        PayU::$merchantId = $this->merchant_id;
-        PayU::$language = $this->getLanguagePayu();
-        PayU::$isTest = ($this->testCheck) ? true : $this->isTest;
-        $urlPayment = woo_payu_latam_sdk_pls()->createUrl($this->isTest);
-        Environment::setPaymentsCustomUrl($urlPayment);
+        $this->credentialsPayu();
 
         try{
             $response = PayUPayments::doAuthorizationAndCapture($parameters);
@@ -428,6 +441,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
                 $aprovved = false;
                 $redirect_url  = '';
+                $messge_status = '';
 
                 if ($response->transactionResponse->state == "APPROVED") {
                     $aprovved   = true;
@@ -455,10 +469,10 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                             $order->get_checkout_order_received_url());
                     }else{
                         $redirect_url = $response->transactionResponse->extraParameters->URL_BOLETO_BANCARIO ??
-                            $response->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML;
-                        $aprovved   = true;
+                            $response->transactionResponse->extraParameters->URL_PAYMENT_RECEIPT_HTML ?? $response->transactionResponse->extraParameters->BANK_URL;
+                        $aprovved = true;
                     }
-                } elseif ($response->transactionResponse->state == "DECLINED") {
+                } elseif ($response->transactionResponse->state === "DECLINED") {
                     $transactionId = $response->transactionResponse->transactionId;
                     $message   = __('Payment declined', 'woo-payu-latam-sdk');
                     $messageClass  = 'woocommerce-error';
@@ -467,6 +481,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                         'woo-payu-latam-sdk'), $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
+                    $messge_status = __('Declined transaction',
+                        'woo-payu-latam-sdk');
                 } elseif ($response->transactionResponse->state == "EXPIRED") {
                     $transactionId = $response->transactionResponse->transactionId;
                     $message       = __('Payment expired', 'woo-payu-latam-sdk');
@@ -476,9 +492,11 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                         $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
+                    $messge_status = __('Expired transaction',
+                        'woo-payu-latam-sdk');
                 }
 
-                return ['status' => $aprovved, 'url' => $redirect_url];
+                return ['status' => $aprovved, 'message' => $messge_status, 'url' => $redirect_url];
 
             }
 
@@ -496,6 +514,38 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         }
 
         return ['status' => false, 'message' => __('Not processed payment')];
+    }
+
+    public function getBanks()
+    {
+        $this->credentialsPayu();
+
+        $parameters = array(
+            PayUParameters::PAYMENT_METHOD => "PSE",
+            PayUParameters::COUNTRY => PayUCountries::CO,
+        );
+
+        $banks = [];
+
+        try{
+            $array = PayUPayments::getPSEBanks($parameters);
+            $banks = $array->banks;
+        }catch (PayUException $ex){
+            woo_payu_latam_sdk_pls()->log($ex->getMessage());
+        }
+
+        return $banks;
+    }
+
+    protected function credentialsPayu()
+    {
+        PayU::$apiKey = $this->apikey;
+        PayU::$apiLogin = $this->apilogin;
+        PayU::$merchantId = $this->merchant_id;
+        PayU::$language = $this->getLanguagePayu();
+        PayU::$isTest = ($this->testCheck) ? true : $this->isTest;
+        $urlPayment = woo_payu_latam_sdk_pls()->createUrl($this->isTest);
+        Environment::setPaymentsCustomUrl($urlPayment);
     }
 
 }
