@@ -5,7 +5,7 @@ Tags: commerce, e-commerce, commerce, wordpress ecommerce, store, sales, sell, s
 Requires at least: 5.0
 Tested up to: 5.2
 Requires PHP: 7.1.0
-Stable tag: 1.0.6
+Stable tag: 1.0.7
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -53,6 +53,8 @@ Si. But it is advisable that you consider using it since it is revealing for bro
 * Added PSE Colombia
 = 1.0.6 =
 * Fixed load payments
+= 1.0.7 =
+* Fixed parameters PSE
 
 == Additional Info ==
 **Contribute** [repository on github](https://github.com/saulmoralespa/woo-payu-latam-sdk)

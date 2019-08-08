@@ -34,6 +34,9 @@
 
            if (person_type.length === 0)
                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgPersonType}">`);
+
+           checkout_form.append($('<input name="banks_payu_latam_colombia" type="hidden" />' ).val( bank ));
+           checkout_form.append($('<input name="person_type_payu_latam_colombia" type="hidden" />' ).val( person_type ));
         }
 
         if(form_checkout_payment.val() === 'payu_latam_sdk_pls'){
