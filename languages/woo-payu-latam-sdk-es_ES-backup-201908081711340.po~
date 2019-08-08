@@ -250,11 +250,11 @@ msgstr "Fecha de vencimiento de la tarjeta inválida"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:181
 msgid "Select a bank"
-msgstr "Seleccione un banco"
+msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:182
 msgid "Select a type of person"
-msgstr "Seleccione un tipo de persona"
+msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-pse.php:10
 #: includes/class-woo-payu-latam-sdk-pse.php:46

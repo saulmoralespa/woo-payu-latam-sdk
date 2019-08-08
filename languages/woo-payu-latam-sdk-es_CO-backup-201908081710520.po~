@@ -3,10 +3,10 @@ msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-08-08 17:09+0000\n"
-"PO-Revision-Date: 2019-08-08 17:11+0000\n"
+"PO-Revision-Date: 2019-08-08 17:10+0000\n"
 "Last-Translator: wpdev <cortuclas@gmail.com>\n"
-"Language-Team: Español\n"
-"Language: es_ES\n"
+"Language-Team: Español de Colombia\n"
+"Language: es_CO\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -246,15 +246,15 @@ msgstr "Número de tarjeta inválido"
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:180
 msgid "Invalid card expiration date"
-msgstr "Fecha de vencimiento de la tarjeta inválida"
+msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:181
 msgid "Select a bank"
-msgstr "Seleccione un banco"
+msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:182
 msgid "Select a type of person"
-msgstr "Seleccione un tipo de persona"
+msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-pse.php:10
 #: includes/class-woo-payu-latam-sdk-pse.php:46
@@ -395,23 +395,23 @@ msgstr "Cuotas"
 
 #: includes/admin/payu-settings.php:146
 msgid "Discount for card"
-msgstr "Descuento por tarjeta"
+msgstr ""
 
 #: includes/admin/payu-settings.php:151
 msgid "Cards numbers"
-msgstr "Números de tarjetas"
+msgstr ""
 
 #: includes/admin/payu-settings.php:154
 msgid "Add card numbers"
-msgstr "Agregar números de tarjeta"
+msgstr ""
 
 #: includes/admin/payu-settings.php:161
 msgid "Discount percentage"
-msgstr "Porcentaje de descuento"
+msgstr ""
 
 #: includes/admin/payu-settings.php:163
 msgid "The discount percentage"
-msgstr "El porcentaje de descuento"
+msgstr ""
 
 #. Name of the plugin
 msgid "Woo payU latam SDK"

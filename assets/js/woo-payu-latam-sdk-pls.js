@@ -5,7 +5,9 @@
     const form_card_payu_latam_sdk_pls = '#form-payu-latam-sdk';
 
     $( 'body' ).on( 'updated_checkout', function() {
-        loadCard();
+        $('input[name="payment_method"]').change(function(){
+            loadCard();
+        }).change();
     } );
 
     $(document.body).on('checkout_error', function () {
@@ -30,7 +32,7 @@
 
            let person_type = checkout_form.find('select[name="person_type_payu_latam_colombia"]').val();
 
-           if (!person_type)
+           if (person_type.length === 0)
                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgPersonType}">`);
         }
 
@@ -42,25 +44,10 @@
             let card_cvv = checkout_form.find('#payu-latam-sdk-cvc').val();
             let installments =  checkout_form.find('#payu-latam-sdk-installments');
 
-            card_expire = card_expire.replace(/ /g, '');
-            card_expire = card_expire.split('/');
-            let month = card_expire[0];
-
-            if (month.length === 1) month = `0${month}`;
-
-            let date = new Date();
-            let year = date.getFullYear();
-            year = year.toString();
-            let lenYear = year.substr(0, 2);
-
-            let yearEnd = card_expire[1].length === 4 ? card_expire[1]  : lenYear + card_expire[1].substr(-2);
-
-            card_expire = `${month}/${yearEnd}`;
 
             checkout_form.append($('<input name="payu-latam-sdk-number" type="hidden" />' ).val( number_card ));
             checkout_form.append($('<input name="payu-latam-sdk-name" type="hidden" />' ).val( card_holder ));
             checkout_form.append($('<input name="payu-latam-sdk-payment-method" type="hidden" />' ).val( getTypeCard() ));
-            checkout_form.append($('<input name="payu-latam-sdk-expiry" type="hidden" />' ).val( card_expire ));
             checkout_form.append($('<input name="payu-latam-sdk-cvc" type="hidden" />' ).val( card_cvv ));
 
             if (installments.length)
@@ -79,8 +66,25 @@
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgNoInstallments}">`);
             }else if (!valid_credit_card(number_card)){
                 checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgNoCardValidate}">`);
-            }else if (!validateDate(yearEnd, month)){
-                checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgValidateDate}">`);
+            }
+
+            if(card_expire){
+                card_expire = card_expire.replace(/ /g, '');
+                card_expire = card_expire.split('/');
+                let month = card_expire[0];
+
+                if (month.length === 1) month = `0${month}`;
+
+                let date = new Date();
+                let year = date.getFullYear();
+                year = year.toString();
+                let lenYear = year.substr(0, 2);
+                let yearEnd = card_expire[1].length === 4 ? card_expire[1]  : lenYear + card_expire[1].substr(-2);
+                card_expire = `${month}/${yearEnd}`;
+                checkout_form.append($('<input name="payu-latam-sdk-expiry" type="hidden" />' ).val( card_expire ));
+
+                if (!validateDate(yearEnd, month))
+                    checkout_form.append(`<input type="hidden" name="payu-latam-sdk-errorcard" value="${payu_latam_sdk_pls.msgValidateDate}">`);
             }
         }
 

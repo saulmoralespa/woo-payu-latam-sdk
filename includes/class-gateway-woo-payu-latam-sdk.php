@@ -125,6 +125,8 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $params = $_POST;
         $params['id_order'] = $order_id;
 
+        woo_payu_latam_sdk_pls()->log(print_r($_POST, true));
+
         $payment = new Payu_Latam_SDK_PLS();
         $data = $payment->doPayment($params, false);
 
