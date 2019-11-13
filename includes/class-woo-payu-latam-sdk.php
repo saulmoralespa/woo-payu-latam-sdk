@@ -431,11 +431,13 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     public function executePayment(array $parameters, $order = null)
     {
-
+        woo_payu_latam_sdk_pls()->log($parameters);
+        woo_payu_latam_sdk_pls()->log($order);
         $this->credentialsPayu();
 
         try{
             $response = PayUPayments::doAuthorizationAndCapture($parameters);
+            woo_payu_latam_sdk_pls()->log($response);
 
             if (!$this->testCheck){
 
@@ -481,8 +483,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                         'woo-payu-latam-sdk'), $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
-                    $messge_status = __('Declined transaction',
-                        'woo-payu-latam-sdk');
+                    $messge_status = $response->transactionResponse->paymentNetworkResponseErrorMessage ?? __('Declined transaction', 'woo-payu-latam-sdk');
                 } elseif ($response->transactionResponse->state == "EXPIRED") {
                     $transactionId = $response->transactionResponse->transactionId;
                     $message       = __('Payment expired', 'woo-payu-latam-sdk');

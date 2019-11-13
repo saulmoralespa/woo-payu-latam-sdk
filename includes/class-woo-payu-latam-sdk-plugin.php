@@ -124,28 +124,9 @@ class Woo_Payu_Latam_SDK_Plugin
     public function custom_woocommerce_billing_fields($fields)
     {
         if ($this->getDefaultCountry() !== 'BR' && $this->get_available_payment()) {
-
-            $fields['billing_type_document'] = array(
-                'label'       => __('Tipo de documento', 'woo-payu-latam-sdk'),
-                'placeholder' => _x('', 'placeholder', 'woo-payu-latam-sdk'),
-                'required'    => true,
-                'clear'       => false,
-                'type'        => 'select',
-                'default' => 'CC',
-                'options'     => array(
-                    'CC' => __('Cédula de ciudadanía' ),
-                    'CE' => __('Cédula de extranjería'),
-                    'CEL' => __('En caso de identificarse a través de la línea del móvil'),
-                    'DE' => __('Documento de identificación extranjero'),
-                    'PP' => __('Pasaporte'),
-                    'NIT' => __('(NIT) Número de indentificación tributaria'),
-                    'TI' => __('Tarjeta de identidad')
-                )
-            );
-
             $fields['billing_dni'] = array(
-                'label' => __('DNI', 'woo-payu-latam-sdk'),
-                'placeholder' => _x('Your DNI here....', 'placeholder', 'woo-payu-latam-sdk'),
+                'label' => __('Cardholder associated DNI', 'woo-payu-latam-sdk'),
+                'placeholder' => _x('Cardholder associated DNI....', 'placeholder', 'woo-payu-latam-sdk'),
                 'required' => true,
                 'clear' => false,
                 'type' => 'number'
