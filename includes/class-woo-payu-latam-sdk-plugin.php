@@ -160,7 +160,8 @@ class Woo_Payu_Latam_SDK_Plugin
                     'msgNoCardValidate' => __('Card number invalid','woo-payu-latam-sdk'),
                     'msgValidateDate' => __('Invalid card expiration date','woo-payu-latam-sdk'),
                     'msgBank' => __('Select a bank','woo-payu-latam-sdk'),
-                    'msgPersonType' => __('Select a type of person','woo-payu-latam-sdk')
+                    'msgPersonType' => __('Select a type of person','woo-payu-latam-sdk'),
+                    'placeholdersName' => __('Name','woo-payu-latam-sdk')
                 ]
             );
         }

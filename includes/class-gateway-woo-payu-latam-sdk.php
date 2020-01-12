@@ -16,7 +16,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->method_description = __('Accept credit card and cash payments', 'woo-payu-latam-sdk');
         $this->description  = $this->get_option( 'description' );
         $this->order_button_text = __('Continue to payment', 'woo-payu-latam-sdk');
-        $this->has_fields = false;
+        $this->has_fields = true;
         $this->supports = ['products'];
         $this->init_form_fields();
         $this->init_settings();

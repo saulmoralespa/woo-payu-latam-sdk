@@ -14,9 +14,10 @@
         swal.close();
     });
 
-    const form_checkout_payment = $('form[name="checkout"] input[name="payment_method"]:checked');
 
     checkout_form.on( 'checkout_place_order', function() {
+
+        const form_checkout_payment = $('form[name="checkout"] input[name="payment_method"]:checked');
 
         if(form_checkout_payment.val() === 'payu_latam_sdk_baloto_plspse'){
 
@@ -106,7 +107,13 @@
         {
             new Card({
                 form: document.querySelector(form_card_payu_latam_sdk_pls),
-                container: '.card-wrapper'
+                container: '.card-wrapper',
+                placeholders: {
+                    number: '•••• •••• •••• ••••',
+                    name: payu_latam_sdk_pls.placeholdersName,
+                    expiry: '••/••••',
+                    cvc: '•••'
+                }
             });
         }
     }

@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-13 20:19+0000\n"
+"POT-Creation-Date: 2020-01-12 23:08+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -132,7 +132,7 @@ msgstr ""
 
 #: includes/class-woo-payu-latam-sdk.php:452
 #: includes/class-woo-payu-latam-sdk.php:454
-#: includes/class-woo-payu-latam-sdk-plugin.php:199
+#: includes/class-woo-payu-latam-sdk-plugin.php:200
 #, php-format
 msgid "Successful payment (Transaction ID: %s)"
 msgstr ""
@@ -152,7 +152,7 @@ msgid "Payment declined"
 msgstr ""
 
 #: includes/class-woo-payu-latam-sdk.php:482
-#: includes/class-woo-payu-latam-sdk-plugin.php:203
+#: includes/class-woo-payu-latam-sdk-plugin.php:204
 #, php-format
 msgid "Payment declined (Transaction ID: %s)"
 msgstr ""
@@ -166,7 +166,7 @@ msgid "Payment expired"
 msgstr ""
 
 #: includes/class-woo-payu-latam-sdk.php:492
-#: includes/class-woo-payu-latam-sdk-plugin.php:207
+#: includes/class-woo-payu-latam-sdk-plugin.php:208
 #, php-format
 msgid "Payment expired (Transaction ID: %s)"
 msgstr ""
@@ -238,6 +238,10 @@ msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:163
 msgid "Select a type of person"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk-plugin.php:164
+msgid "Name"
 msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-pse.php:10

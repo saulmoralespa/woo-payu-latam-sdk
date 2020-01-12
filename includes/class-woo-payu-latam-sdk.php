@@ -106,7 +106,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     PayUParameters::USER_AGENT => $_SERVER['HTTP_USER_AGENT'],
                     PayUParameters::PSE_FINANCIAL_INSTITUTION_CODE => $params['banks_payu_latam_colombia'],
                     PayUParameters::PAYER_PERSON_TYPE => $params['person_type_payu_latam_colombia'],
-                    PayUParameters::PAYER_DOCUMENT_TYPE => $params['billing_type_document'],
+                    PayUParameters::PAYER_DOCUMENT_TYPE => $params['billing_type_document'] ?? 'CC',
                     PayUParameters::RESPONSE_URL => get_bloginfo( 'url' )
                 ]
             );
