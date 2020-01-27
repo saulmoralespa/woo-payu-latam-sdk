@@ -81,7 +81,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $this->paramsBuyerPayu(false),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
-                $this->paramExpirePayu()
+                $this->paramExpirePayu(),
+                $this->paramsResponseUrl()
             );
         }
 
@@ -91,7 +92,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $this->paramsBuyerPayu(true),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
-                $this->paramExpirePayu()
+                $this->paramExpirePayu(),
+                $this->paramsResponseUrl()
             );
         }
 
@@ -101,13 +103,13 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $this->paramsBuyerPayu(true),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
+                $this->paramsResponseUrl(),
                 [
                     PayUParameters::PAYER_COOKIE => md5(session_id().microtime()),
                     PayUParameters::USER_AGENT => $_SERVER['HTTP_USER_AGENT'],
                     PayUParameters::PSE_FINANCIAL_INSTITUTION_CODE => $params['banks_payu_latam_colombia'],
                     PayUParameters::PAYER_PERSON_TYPE => $params['person_type_payu_latam_colombia'],
-                    PayUParameters::PAYER_DOCUMENT_TYPE => $params['billing_type_document'] ?? 'CC',
-                    PayUParameters::RESPONSE_URL => get_bloginfo( 'url' )
+                    PayUParameters::PAYER_DOCUMENT_TYPE => $params['billing_type_document'] ?? 'CC'
                 ]
             );
         }
@@ -381,6 +383,13 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
     {
         return [
             PayUParameters::EXPIRATION_DATE => $this->dateExpire()
+        ];
+    }
+
+    public function paramsResponseUrl()
+    {
+        return [
+            PayUParameters::RESPONSE_URL => !empty($this->response_page) ? get_page_link($this->response_page) : get_bloginfo( 'url' )
         ];
     }
 

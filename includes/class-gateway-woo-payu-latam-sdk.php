@@ -27,6 +27,7 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $this->apikey  = $this->get_option( 'apikey' );
         $this->apilogin  = $this->get_option( 'apilogin' );
         $this->isTest = (boolean)$this->get_option('environment');
+        $this->response_page = $this->get_option( 'response_page' );
         $installments = (int)$this->get_option('installments');
 
         $this->cards_numbers = strpos($this->get_option('cards_numbers_data'), ',') ?

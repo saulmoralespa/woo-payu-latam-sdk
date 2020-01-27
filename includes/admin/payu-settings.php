@@ -22,6 +22,15 @@ let vals = ['" . implode("','", $cards_numbers) . "'];
     s2.val(vals).trigger(\"change\");
 ": '';
 
+$pages = get_pages();
+
+$pages_actual = [];
+
+if (!empty($pages)){
+    foreach ($pages as $page){
+        $pages_actual[$page->ID] = $page->post_title;
+    }
+}
 
 wc_enqueue_js( "
     jQuery( function( $ ) {
@@ -131,6 +140,14 @@ return array(
         'default' => '',
         'desc_tip' => true,
         'placeholder' => ''
+    ),
+    'response_page' => array(
+        'title' => __('Response page effective payment methods', 'woo-payu-latam-sdk'),
+        'type'        => 'select',
+        'class'       => 'wc-enhanced-select',
+        'description' => __('Response page effective payment methods', 'woo-payu-latam-sdk'),
+        'desc_tip' => true,
+        'options'     => $pages_actual
     ),
     'installments_number' => array(
         'title'       => __( 'Installments number', 'woo-payu-latam-sdk'),

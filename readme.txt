@@ -5,7 +5,7 @@ Tags: commerce, e-commerce, commerce, wordpress ecommerce, store, sales, sell, s
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 7.1.0
-Stable tag: 1.0.9
+Stable tag: 1.0.10
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -59,6 +59,8 @@ Si. But it is advisable that you consider using it since it is revealing for bro
 * Refactor DNI
 = 1.0.9 =
 * Fixed change payment metohod
+= 1.0.10 =
+* Added response page for methods of cash
 
 == Additional Info ==
 **Contribute** [repository on github](https://github.com/saulmoralespa/woo-payu-latam-sdk)

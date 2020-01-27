@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-12 23:08+0000\n"
+"POT-Creation-Date: 2020-01-27 02:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -76,7 +76,7 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-boleto.php:42
 #: includes/class-woo-payu-latam-sdk-pse.php:37
 #: includes/class-woo-payu-latam-sdk-efecty.php:37
-#: includes/admin/payu-settings.php:63
+#: includes/admin/payu-settings.php:72
 msgid "Enable/Disable"
 msgstr ""
 
@@ -88,7 +88,7 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-boleto.php:48
 #: includes/class-woo-payu-latam-sdk-pse.php:43
 #: includes/class-woo-payu-latam-sdk-efecty.php:43
-#: includes/admin/payu-settings.php:69
+#: includes/admin/payu-settings.php:78
 msgid "Title"
 msgstr ""
 
@@ -96,7 +96,7 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-boleto.php:50
 #: includes/class-woo-payu-latam-sdk-pse.php:45
 #: includes/class-woo-payu-latam-sdk-efecty.php:45
-#: includes/admin/payu-settings.php:71
+#: includes/admin/payu-settings.php:80
 msgid "It corresponds to the title that the user sees during the checkout"
 msgstr ""
 
@@ -104,7 +104,7 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-boleto.php:55
 #: includes/class-woo-payu-latam-sdk-pse.php:50
 #: includes/class-woo-payu-latam-sdk-efecty.php:50
-#: includes/admin/payu-settings.php:76
+#: includes/admin/payu-settings.php:85
 msgid "Description"
 msgstr ""
 
@@ -112,7 +112,7 @@ msgstr ""
 #: includes/class-woo-payu-latam-sdk-boleto.php:57
 #: includes/class-woo-payu-latam-sdk-pse.php:52
 #: includes/class-woo-payu-latam-sdk-efecty.php:52
-#: includes/admin/payu-settings.php:78
+#: includes/admin/payu-settings.php:87
 msgid ""
 "It corresponds to the description that the user will see during the checkout"
 msgstr ""
@@ -130,52 +130,52 @@ msgstr ""
 msgid "Boleto Bancário cash"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:452
-#: includes/class-woo-payu-latam-sdk.php:454
+#: includes/class-woo-payu-latam-sdk.php:461
+#: includes/class-woo-payu-latam-sdk.php:463
 #: includes/class-woo-payu-latam-sdk-plugin.php:200
 #, php-format
 msgid "Successful payment (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:463
+#: includes/class-woo-payu-latam-sdk.php:472
 #, php-format
 msgid "Pending approval (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:467
+#: includes/class-woo-payu-latam-sdk.php:476
 #, php-format
 msgid "Payment pending (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:479
+#: includes/class-woo-payu-latam-sdk.php:488
 msgid "Payment declined"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:482
+#: includes/class-woo-payu-latam-sdk.php:491
 #: includes/class-woo-payu-latam-sdk-plugin.php:204
 #, php-format
 msgid "Payment declined (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:486
+#: includes/class-woo-payu-latam-sdk.php:495
 msgid "Declined transaction"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:489
+#: includes/class-woo-payu-latam-sdk.php:498
 msgid "Payment expired"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:492
+#: includes/class-woo-payu-latam-sdk.php:501
 #: includes/class-woo-payu-latam-sdk-plugin.php:208
 #, php-format
 msgid "Payment expired (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:496
+#: includes/class-woo-payu-latam-sdk.php:505
 msgid "Expired transaction"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:507
+#: includes/class-woo-payu-latam-sdk.php:516
 #, php-format
 msgid ""
 "payU Latam SDK: Check that you have entered correctly merchant id, account "
@@ -183,7 +183,7 @@ msgid ""
 "%s Message error: %s code error: %s"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:508
+#: includes/class-woo-payu-latam-sdk.php:517
 msgid "Click here to see"
 msgstr ""
 
@@ -273,129 +273,133 @@ msgid "Payu Latam"
 msgstr ""
 
 #: includes/class-gateway-woo-payu-latam-sdk.php:16
-#: includes/admin/payu-settings.php:79
+#: includes/admin/payu-settings.php:88
 msgid "Accept credit card and cash payments"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:74
+#: includes/class-gateway-woo-payu-latam-sdk.php:75
 msgid ""
 "Could not perform any tests, because you have not entered all the required "
 "fields"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:93
+#: includes/class-gateway-woo-payu-latam-sdk.php:94
 msgid "Data of card"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:94
+#: includes/class-gateway-woo-payu-latam-sdk.php:95
 msgid "Card number"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:95
+#: includes/class-gateway-woo-payu-latam-sdk.php:96
 msgid "Cardholder"
 msgstr ""
 
-#: includes/class-gateway-woo-payu-latam-sdk.php:101
+#: includes/class-gateway-woo-payu-latam-sdk.php:102
 msgid "Number of installments"
 msgstr ""
 
-#: includes/admin/payu-settings.php:59
+#: includes/admin/payu-settings.php:68
 msgid "For tests use the credentials provided by payU latam"
 msgstr ""
 
-#: includes/admin/payu-settings.php:65
+#: includes/admin/payu-settings.php:74
 msgid "Enable Payu Latam SDK"
 msgstr ""
 
-#: includes/admin/payu-settings.php:83
+#: includes/admin/payu-settings.php:92
 msgid "Debug"
 msgstr ""
 
-#: includes/admin/payu-settings.php:85
+#: includes/admin/payu-settings.php:94
 msgid "Debug records, it is saved in payment log"
 msgstr ""
 
-#: includes/admin/payu-settings.php:89
+#: includes/admin/payu-settings.php:98
 msgid "Credentials"
 msgstr ""
 
-#: includes/admin/payu-settings.php:94
+#: includes/admin/payu-settings.php:103
 msgid "Environment"
 msgstr ""
 
-#: includes/admin/payu-settings.php:97
+#: includes/admin/payu-settings.php:106
 msgid "Enable to run tests"
 msgstr ""
 
-#: includes/admin/payu-settings.php:101
+#: includes/admin/payu-settings.php:110
 msgid "Production"
 msgstr ""
 
-#: includes/admin/payu-settings.php:102
+#: includes/admin/payu-settings.php:111
 msgid "Test"
 msgstr ""
 
-#: includes/admin/payu-settings.php:106
+#: includes/admin/payu-settings.php:115
 msgid "Merchant id"
 msgstr ""
 
-#: includes/admin/payu-settings.php:108
+#: includes/admin/payu-settings.php:117
 msgid "Merchant id, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:113
+#: includes/admin/payu-settings.php:122
 msgid "Account id"
 msgstr ""
 
-#: includes/admin/payu-settings.php:115
+#: includes/admin/payu-settings.php:124
 msgid "account id, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:120
+#: includes/admin/payu-settings.php:129
 msgid "Apikey"
 msgstr ""
 
-#: includes/admin/payu-settings.php:122
+#: includes/admin/payu-settings.php:131
 msgid "apikey, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:128
+#: includes/admin/payu-settings.php:137
 msgid "Apilogin"
 msgstr ""
 
-#: includes/admin/payu-settings.php:130
+#: includes/admin/payu-settings.php:139
 msgid "apilogin, you find it in the payu account"
 msgstr ""
 
-#: includes/admin/payu-settings.php:136
+#: includes/admin/payu-settings.php:145 includes/admin/payu-settings.php:148
+msgid "Response page effective payment methods"
+msgstr ""
+
+#: includes/admin/payu-settings.php:153
 msgid "Installments number"
 msgstr ""
 
-#: includes/admin/payu-settings.php:138
+#: includes/admin/payu-settings.php:155
 msgid "The maximum number of installments that the user can select"
 msgstr ""
 
-#: includes/admin/payu-settings.php:141
+#: includes/admin/payu-settings.php:158
 msgid "Installments"
 msgstr ""
 
-#: includes/admin/payu-settings.php:146
+#: includes/admin/payu-settings.php:163
 msgid "Discount for card"
 msgstr ""
 
-#: includes/admin/payu-settings.php:151
+#: includes/admin/payu-settings.php:168
 msgid "Cards numbers"
 msgstr ""
 
-#: includes/admin/payu-settings.php:154
+#: includes/admin/payu-settings.php:171
 msgid "Add card numbers"
 msgstr ""
 
-#: includes/admin/payu-settings.php:161
+#: includes/admin/payu-settings.php:178
 msgid "Discount percentage"
 msgstr ""
 
-#: includes/admin/payu-settings.php:163
+#: includes/admin/payu-settings.php:180
 msgid "The discount percentage"
 msgstr ""
 
