@@ -141,14 +141,6 @@ return array(
         'desc_tip' => true,
         'placeholder' => ''
     ),
-    'response_page' => array(
-        'title' => __('Response page effective payment methods', 'woo-payu-latam-sdk'),
-        'type'        => 'select',
-        'class'       => 'wc-enhanced-select',
-        'description' => __('Response page effective payment methods', 'woo-payu-latam-sdk'),
-        'desc_tip' => true,
-        'options'     => $pages_actual
-    ),
     'installments_number' => array(
         'title'       => __( 'Installments number', 'woo-payu-latam-sdk'),
         'type'        => 'title',

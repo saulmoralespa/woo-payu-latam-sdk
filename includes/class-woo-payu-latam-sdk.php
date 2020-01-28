@@ -82,7 +82,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
                 $this->paramExpirePayu(),
-                $this->paramsResponseUrl()
+                $this->paramsResponseUrl($order)
             );
         }
 
@@ -93,7 +93,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
                 $this->paramExpirePayu(),
-                $this->paramsResponseUrl()
+                $this->paramsResponseUrl($order)
             );
         }
 
@@ -103,7 +103,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 $this->paramsBuyerPayu(true),
                 $this->paramsPayerPayu(),
                 $this->paramsLeftoverPayu(),
-                $this->paramsResponseUrl(),
+                $this->paramsResponseUrl($order),
                 [
                     PayUParameters::PAYER_COOKIE => md5(session_id().microtime()),
                     PayUParameters::USER_AGENT => $_SERVER['HTTP_USER_AGENT'],
@@ -386,10 +386,10 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         ];
     }
 
-    public function paramsResponseUrl()
+    public function paramsResponseUrl(WC_Order $order)
     {
         return [
-            PayUParameters::RESPONSE_URL => !empty($this->response_page) ? get_page_link($this->response_page) : get_bloginfo( 'url' )
+            PayUParameters::RESPONSE_URL => $order->get_checkout_order_received_url()
         ];
     }
 
