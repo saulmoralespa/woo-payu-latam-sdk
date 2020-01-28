@@ -44,6 +44,8 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
         add_action('woocommerce_api_'.strtolower(get_class($this)), array($this, 'confirmation_ipn'));
+        add_filter( 'woocommerce_available_payment_gateways', array($this, 'woo_payu_latam_payment_gateway_disable_country') );
+
     }
 
     public function is_available()
@@ -184,5 +186,17 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         }
 
         return $response;
+    }
+
+    public function woo_payu_latam_payment_gateway_disable_country($available_gateways)
+    {
+        if ( is_admin() ) return $available_gateways;
+
+        if ( WC()->customer->get_billing_country() !== 'CO' ) {
+            unset( $available_gateways['payu_latam_sdk_baloto_plsb'] );
+            unset( $available_gateways['payu_latam_sdk_efecty_plse'] );
+            unset( $available_gateways['payu_latam_sdk_baloto_plspse'] );
+        }
+        return $available_gateways;
     }
 }
