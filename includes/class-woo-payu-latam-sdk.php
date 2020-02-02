@@ -182,7 +182,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
     }
 
-    public function dataOrder($order = null)
+    public function dataOrder(WC_Order $order = null)
     {
         $data = [];
 
@@ -213,6 +213,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             $data['street2'] = $order->get_shipping_address_1() ? $order->get_shipping_address_1() . " " . $order->get_shipping_address_2() : $order->get_billing_address_1() . " " . $order->get_billing_address_2();
             $data['postalCode'] = empty($order->get_billing_postcode()) ? '000000' : $order->get_billing_postcode();
             $data['dni'] = empty(get_post_meta( $order->get_id(), '_billing_dni', true )) ? get_post_meta( $order->get_id(), '_billing_cpf', true ) : get_post_meta( $order->get_id(), '_billing_dni', true );
+            $data['extra'] = $order->get_id();
         }
 
         return $data;
@@ -292,7 +293,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             PayUParameters::DESCRIPTION => $this->dataPayment['description'],
             PayUParameters::VALUE => $total,
             PayUParameters::CURRENCY => $this->getCurrency(),
-            PayUParameters::NOTIFY_URL => $this->getUrlNotify()
+            PayUParameters::NOTIFY_URL => $this->getUrlNotify(),
+            PayUParameters::EXTRA1 => $this->dataPayment['extra']
         ];
 
         return $params;
@@ -438,10 +440,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         return $url;
     }
 
-    public function executePayment(array $parameters, $order = null)
+    public function executePayment(array $parameters, WC_Order $order = null)
     {
-        woo_payu_latam_sdk_pls()->log($parameters);
-        woo_payu_latam_sdk_pls()->log($order);
         $this->credentialsPayu();
 
         try{
@@ -469,8 +469,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $transactionId = $response->transactionResponse->transactionId;
                     $this->saveTransactionId($order->get_id(), $transactionId);
                     $order->update_status('on-hold');
-                    $order->add_order_note(sprintf(__('Pending approval (Transaction ID: %s)',
-                        'woo-payu-latam-sdk'), $transactionId));
+                    $order->add_order_note(sprintf(__('Pending approval: %s (Transaction ID: %s)',
+                        'woo-payu-latam-sdk'), $response->transactionResponse->pendingReason, $transactionId));
 
                     if (!$this->isCash()){
                         $message = sprintf(__('Payment pending (Transaction ID: %s)', 'woo-payu-latam-sdk'),
@@ -488,8 +488,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $message   = __('Payment declined', 'woo-payu-latam-sdk');
                     $messageClass  = 'woocommerce-error';
                     $order->update_status('failed');
-                    $order->add_order_note(sprintf(__('Payment declined (Transaction ID: %s)',
-                        'woo-payu-latam-sdk'), $transactionId));
+                    $order->add_order_note(sprintf(__('Payment declined: %s (Transaction ID: %s)',
+                        'woo-payu-latam-sdk'), $response->transactionResponse->paymentNetworkResponseErrorMessage, $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
                     $messge_status = $response->transactionResponse->paymentNetworkResponseErrorMessage ?? __('Declined transaction', 'woo-payu-latam-sdk');
@@ -498,8 +498,8 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $message       = __('Payment expired', 'woo-payu-latam-sdk');
                     $messageClass  = 'woocommerce-error';
                     $order->update_status('failed');
-                    $order->add_order_note(sprintf(__('Payment expired (Transaction ID: %s)', 'woo-payu-latam-sdk'),
-                        $transactionId));
+                    $order->add_order_note(sprintf(__('Payment expired: %s (Transaction ID: %s)', 'woo-payu-latam-sdk'),
+                        $response->transactionResponse->paymentNetworkResponseErrorMessage, $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
                     $messge_status = __('Expired transaction',

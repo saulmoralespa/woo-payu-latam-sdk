@@ -156,8 +156,43 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
         $body = file_get_contents('php://input');
         parse_str($body, $data);
 
-        woo_payu_latam_sdk_pls()->log($data);
+        if (empty($data['extra1']))
+            return;
 
+        $order_id = $data['extra1'];
+        $order = new WC_Order($order_id);
+
+        $reference_code = $data['reference_sale'];
+        $state_pol = $data['state_pol'];
+        $signature_payu = $data['sign'];
+        $value = $data['value'];
+        $transaction_id = $data['transaction_id'];
+
+        $amount = $this->formatted_amount($value, 1);
+
+        $dataSign = [
+            'referenceCode' =>  $reference_code,
+            'amount' =>  $amount,
+            'currency' => $order->get_currency(),
+            'state_pol' => $state_pol
+        ];
+
+        $signatureOrder = $this->get_sign_validate($dataSign);
+
+        woo_payu_latam_sdk_pls()->log("signatureOrder: $signatureOrder signature_payu: $signature_payu");
+
+        if ($state_pol === '7' || $signatureOrder !== $signature_payu)
+            return;
+
+        if ($state_pol === '4'){
+            $order->payment_complete($transaction_id);
+            $order->add_order_note(sprintf(__('Successful payment (Transaction ID: %s)',
+                'woo-payu-latam-sdk'), $transaction_id));
+        }elseif ($state_pol !== '7'  && $state_pol !== '4'){
+            $order->update_status('failed');
+            if(!isset($data['error_message_bank']))
+                $order->add_order_note($data['response_message_pol']);
+        }
 
         header("HTTP/1.1 200 OK");
     }
@@ -198,5 +233,23 @@ class WC_Payment_Payu_Latam_SDK_PLS extends WC_Payment_Gateway
             unset( $available_gateways['payu_latam_sdk_baloto_plspse'] );
         }
         return $available_gateways;
+    }
+
+    public function formatted_amount($amount, $decimals = 2)
+    {
+        $amount = number_format($amount, $decimals,'.','');
+        return $amount;
+    }
+
+    public function get_sign_validate(array $data = [])
+    {
+        return md5(
+            $this->apikey . "~" .
+            $this->merchant_id . "~" .
+            $data['referenceCode'] ."~".
+            $data['amount']."~".
+            $data['currency']. "~" .
+            $data['state_pol']
+        );
     }
 }

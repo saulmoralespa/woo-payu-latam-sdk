@@ -2,7 +2,7 @@
 /*
 Plugin Name: Woo payU latam SDK
 Description: payU latam  use sdk.
-Version: 1.0.12
+Version: 1.0.13
 Author: Saul Morales Pacheco
 Author URI: https://saulmoralespa.com
 License: GNU General Public License v3.0
@@ -16,7 +16,7 @@ WC requires at least: 2.6
 if (!defined( 'ABSPATH' )) exit;
 
 if(!defined('WOO_PAYU_LATAM_SDK_PLS_VERSION')){
-    define('WOO_PAYU_LATAM_SDK_PLS_VERSION', '1.0.12');
+    define('WOO_PAYU_LATAM_SDK_PLS_VERSION', '1.0.13');
 }
 
 if(!defined('WOO_PAYU_LATAM_SDK_PLS_NAME')){
@@ -45,16 +45,6 @@ function woo_payu_latam_sdk_pls_notices( $notice ) {
 }
 
 function requeriments_woo_payu_latam_sdk_pls(){
-
-    if ( version_compare( '7.1.0', PHP_VERSION, '>' ) ) {
-        if ( is_admin() && ! defined( 'DOING_AJAX' ) ) {
-            $php = __('payU Latam SDK: Requires php version 7.1.0 or higher', 'woo-payu-latam-sdk');
-            add_action('admin_notices', function() use($php) {
-                woo_payu_latam_sdk_pls_notices($php);
-            });
-        }
-        return false;
-    }
 
     $openssl_warning = __( 'payU Latam SDK: Requires OpenSSL >= 1.0.1 to be installed on your server', 'woo-payu-latam-sdk' );
 
