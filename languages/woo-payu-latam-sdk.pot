@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: payU Latam SDK\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-02-02 01:19+0000\n"
+"POT-Creation-Date: 2020-02-17 02:13+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -15,40 +15,36 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.2.0; wp-5.0.3"
 
-#: woo-payu-latam-sdk.php:51
-msgid "payU Latam SDK: Requires php version 7.1.0 or higher"
-msgstr ""
-
-#: woo-payu-latam-sdk.php:59
+#: woo-payu-latam-sdk.php:49
 msgid ""
 "payU Latam SDK: Requires OpenSSL >= 1.0.1 to be installed on your server"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:95
+#: woo-payu-latam-sdk.php:85
 msgid "payU Latam SDK: Woocommerce must be installed and active."
 msgstr ""
 
-#: woo-payu-latam-sdk.php:105
+#: woo-payu-latam-sdk.php:95
 msgid ""
 "payU Latam SDK: Requires one of these currencies USD, BRL, COP, MXN, PEN "
 msgstr ""
 
-#: woo-payu-latam-sdk.php:108 woo-payu-latam-sdk.php:124
+#: woo-payu-latam-sdk.php:98 woo-payu-latam-sdk.php:114
 msgid "Click here to configure"
 msgstr ""
 
-#: woo-payu-latam-sdk.php:120
+#: woo-payu-latam-sdk.php:110
 msgid ""
 "payU Latam SDK: It requires that the country of the store be some of these "
 "countries\n"
 "             Argentina, Brazil, Colombia, Mexico, Panama and Peru "
 msgstr ""
 
-#: woo-payu-latam-sdk.php:138
+#: woo-payu-latam-sdk.php:128
 msgid "payU Latam SDK: the plugin is required "
 msgstr ""
 
-#: woo-payu-latam-sdk.php:141
+#: woo-payu-latam-sdk.php:131
 msgid "WooCommerce Extra Checkout Fields for Brazil"
 msgstr ""
 
@@ -130,51 +126,51 @@ msgstr ""
 msgid "Boleto Bancário cash"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:461
-#: includes/class-woo-payu-latam-sdk.php:463
+#: includes/class-woo-payu-latam-sdk.php:455
+msgid "Error processing payment"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:467
+#: includes/class-woo-payu-latam-sdk.php:469
 #: includes/class-woo-payu-latam-sdk-plugin.php:200
 #: includes/class-gateway-woo-payu-latam-sdk.php:189
 #, php-format
 msgid "Successful payment (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:472
+#: includes/class-woo-payu-latam-sdk.php:478
 #, php-format
 msgid "Pending approval: %s (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:476
+#: includes/class-woo-payu-latam-sdk.php:482
 #, php-format
 msgid "Payment pending (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:488
+#: includes/class-woo-payu-latam-sdk.php:494
 msgid "Payment declined"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:491
+#: includes/class-woo-payu-latam-sdk.php:497
 #, php-format
 msgid "Payment declined: %s (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:495
-msgid "Declined transaction"
-msgstr ""
-
-#: includes/class-woo-payu-latam-sdk.php:498
+#: includes/class-woo-payu-latam-sdk.php:504
 msgid "Payment expired"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:501
+#: includes/class-woo-payu-latam-sdk.php:507
 #, php-format
 msgid "Payment expired: %s (Transaction ID: %s)"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:505
+#: includes/class-woo-payu-latam-sdk.php:511
 msgid "Expired transaction"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:516
+#: includes/class-woo-payu-latam-sdk.php:522
 #, php-format
 msgid ""
 "payU Latam SDK: Check that you have entered correctly merchant id, account "
@@ -182,8 +178,124 @@ msgid ""
 "%s Message error: %s code error: %s"
 msgstr ""
 
-#: includes/class-woo-payu-latam-sdk.php:517
+#: includes/class-woo-payu-latam-sdk.php:523
 msgid "Click here to see"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:570
+msgid "Transaction rejected by financial entity"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:571
+msgid "Transaction rejected by the bank"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:572
+msgid "Insufficient funds"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:573
+msgid "Invalid card"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:574
+msgid "Contact financial entity"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:575
+#: includes/class-woo-payu-latam-sdk.php:576
+#: includes/class-woo-payu-latam-sdk.php:577
+#: includes/class-woo-payu-latam-sdk.php:578
+#: includes/class-woo-payu-latam-sdk.php:579
+msgid "Automatic debit not allowed"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:580
+msgid "Expired card"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:581
+msgid "Restricted Card"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:582
+msgid "Invalid expiration date or security code"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:583
+msgid "Retry Payment"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:584
+msgid "Invalid Transaction"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:585
+msgid "The value exceeds the maximum allowed by the entity"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:586
+msgid "Transaction abandoned by the payer"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:587
+msgid "Unauthorized card to buy online"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:588
+msgid "Transaction rejected for suspected fraud"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:589
+msgid "Digital certificate not found"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:590
+msgid "Error trying to contact the bank"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:591
+msgid "Error communicating with the financial institution"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:592
+msgid "Transaction not allowed to cardholder"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:593
+msgid ""
+"It was not possible to establish communication with the financial institution"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:594
+msgid "No response was received from the financial institution"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:595
+msgid "Transaction Expired"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:596
+msgid "Transaction in manual validation"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:597
+#: includes/class-woo-payu-latam-sdk.php:599
+#: includes/class-woo-payu-latam-sdk.php:600
+#: includes/class-woo-payu-latam-sdk.php:603
+msgid "Payment receipt generated. Awaiting payment"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:598
+msgid "Transaction not allowed"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:601
+msgid "Pending sent to financial institution"
+msgstr ""
+
+#: includes/class-woo-payu-latam-sdk.php:602
+msgid "Awaiting confirmation from PSE"
 msgstr ""
 
 #: includes/class-woo-payu-latam-sdk-plugin.php:109

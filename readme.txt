@@ -5,7 +5,7 @@ Tags: commerce, e-commerce, commerce, wordpress ecommerce, store, sales, sell, s
 Requires at least: 5.0
 Tested up to: 5.3
 Requires PHP: 7.1.0
-Stable tag: 1.0.13
+Stable tag: 1.0.14
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -67,6 +67,8 @@ Si. But it is advisable that you consider using it since it is revealing for bro
 * Updated payments methods by country Colombia
 = 1.0.13 =
 * Updated notification payment
+= 1.0.14 =
+* Updated translations messages status payment
 
 == Additional Info ==
 **Contribute** [repository on github](https://github.com/saulmoralespa/woo-payu-latam-sdk)

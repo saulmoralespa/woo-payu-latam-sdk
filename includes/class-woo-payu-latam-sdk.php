@@ -446,7 +446,13 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
 
         try{
             $response = PayUPayments::doAuthorizationAndCapture($parameters);
-            woo_payu_latam_sdk_pls()->log($response);
+            if ($this->debug === 'yes')
+                woo_payu_latam_sdk_pls()->log($response);
+
+            $responses_code = $this->getResponsesCode();
+
+            $description_response_code = array_key_exists($response->transactionResponse->responseCode, $responses_code) ?
+                $responses_code[$response->transactionResponse->responseCode] : __("Error processing payment", "woo-payu-latam-sdk");
 
             if (!$this->testCheck){
 
@@ -489,17 +495,17 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                     $messageClass  = 'woocommerce-error';
                     $order->update_status('failed');
                     $order->add_order_note(sprintf(__('Payment declined: %s (Transaction ID: %s)',
-                        'woo-payu-latam-sdk'), $response->transactionResponse->paymentNetworkResponseErrorMessage, $transactionId));
+                        'woo-payu-latam-sdk'), $description_response_code, $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
-                    $messge_status = $response->transactionResponse->paymentNetworkResponseErrorMessage ?? __('Declined transaction', 'woo-payu-latam-sdk');
+                    $messge_status = $description_response_code;
                 } elseif ($response->transactionResponse->state == "EXPIRED") {
                     $transactionId = $response->transactionResponse->transactionId;
                     $message       = __('Payment expired', 'woo-payu-latam-sdk');
                     $messageClass  = 'woocommerce-error';
                     $order->update_status('failed');
                     $order->add_order_note(sprintf(__('Payment expired: %s (Transaction ID: %s)', 'woo-payu-latam-sdk'),
-                        $response->transactionResponse->paymentNetworkResponseErrorMessage, $transactionId));
+                        $description_response_code, $transactionId));
                     $redirect_url = add_query_arg(['msg' => urlencode($message), 'type' => $messageClass],
                         $order->get_checkout_order_received_url());
                     $messge_status = __('Expired transaction',
@@ -558,4 +564,43 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
         Environment::setPaymentsCustomUrl($urlPayment);
     }
 
+    public function getResponsesCode()
+    {
+        return [
+            "PAYMENT_NETWORK_REJECTED" => __("Transaction rejected by financial entity", "woo-payu-latam-sdk"),
+            "ENTITY_DECLINED" => __("Transaction rejected by the bank", "woo-payu-latam-sdk"),
+            "INSUFFICIENT_FUNDS" => __("Insufficient funds", "woo-payu-latam-sdk"),
+            "INVALID_CARD" => __("Invalid card", "woo-payu-latam-sdk"),
+            "CONTACT_THE_ENTITY" => __("Contact financial entity", "woo-payu-latam-sdk"),
+            "BANK_ACCOUNT_ACTIVATION_ERROR" => __("Automatic debit not allowed", "woo-payu-latam-sdk"),
+            "BANK_ACCOUNT_NOT_AUTHORIZED_FOR_AUTOMATIC_DEBIT" => __("Automatic debit not allowed", "woo-payu-latam-sdk"),
+            "INVALID_AGENCY_BANK_ACCOUNT" => __("Automatic debit not allowed", "woo-payu-latam-sdk"),
+            "INVALID_BANK_ACCOUNT" => __("Automatic debit not allowed", "woo-payu-latam-sdk"),
+            "INVALID_BANK" => __("Automatic debit not allowed", "woo-payu-latam-sdk"),
+            "EXPIRED_CARD" => __("Expired card", "woo-payu-latam-sdk"),
+            "RESTRICTED_CARD" => __("Restricted Card", "woo-payu-latam-sdk"),
+            "INVALID_EXPIRATION_DATE_OR_SECURITY_CODE" => __("Invalid expiration date or security code", "woo-payu-latam-sdk"),
+            "REPEAT_TRANSACTION" => __("Retry Payment", "woo-payu-latam-sdk"),
+            "INVALID_TRANSACTION" => __("Invalid Transaction", "woo-payu-latam-sdk"),
+            "EXCEEDED_AMOUNT" => __("The value exceeds the maximum allowed by the entity", "woo-payu-latam-sdk"),
+            "ABANDONED_TRANSACTION" => __("Transaction abandoned by the payer", "woo-payu-latam-sdk"),
+            "CREDIT_CARD_NOT_AUTHORIZED_FOR_INTERNET_TRANSACTIONS" => __("Unauthorized card to buy online", "woo-payu-latam-sdk"),
+            "ANTIFRAUD_REJECTED" => __("Transaction rejected for suspected fraud", "woo-payu-latam-sdk"),
+            "DIGITAL_CERTIFICATE_NOT_FOUND" => __("Digital certificate not found", "woo-payu-latam-sdk"),
+            "BANK_UNREACHABLE" => __("Error trying to contact the bank", "woo-payu-latam-sdk"),
+            "ENTITY_MESSAGING_ERROR" => __("Error communicating with the financial institution", "woo-payu-latam-sdk"),
+            "NOT_ACCEPTED_TRANSACTION" => __("Transaction not allowed to cardholder", "woo-payu-latam-sdk"),
+            "PAYMENT_NETWORK_NO_CONNECTION" => __("It was not possible to establish communication with the financial institution", "woo-payu-latam-sdk"),
+            "PAYMENT_NETWORK_NO_RESPONSE" => __("No response was received from the financial institution", "woo-payu-latam-sdk"),
+            "EXPIRED_TRANSACTION" => __("Transaction Expired", "woo-payu-latam-sdk"),
+            "PENDING_TRANSACTION_REVIEW" => __("Transaction in manual validation", "woo-payu-latam-sdk"),
+            "PENDING_TRANSACTION_CONFIRMATION"  => __("Payment receipt generated. Awaiting payment", "woo-payu-latam-sdk"),
+            "PENDING_TRANSACTION_TRANSMISSION"  => __("Transaction not allowed", "woo-payu-latam-sdk"),
+            "PENDING_PAYMENT_IN_ENTITY" =>  __("Payment receipt generated. Awaiting payment", "woo-payu-latam-sdk"),
+            "PENDING_PAYMENT_IN_BANK" => __("Payment receipt generated. Awaiting payment", "woo-payu-latam-sdk"),
+            "PENDING_SENT_TO_FINANCIAL_ENTITY" => __("Payment receipt generated. Awaiting payment", "woo-payu-latam-sdk"),
+            "PENDING_AWAITING_PSE_CONFIRMATION" => __("Awaiting confirmation from PSE", "woo-payu-latam-sdk"),
+            "PENDING_NOTIFYING_ENTITY" => __("Payment receipt generated. Awaiting payment", "woo-payu-latam-sdk"),
+        ];
+    }
 }
