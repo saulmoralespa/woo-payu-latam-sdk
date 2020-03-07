@@ -214,6 +214,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
             $data['postalCode'] = empty($order->get_billing_postcode()) ? '000000' : $order->get_billing_postcode();
             $data['dni'] = empty(get_post_meta( $order->get_id(), '_billing_dni', true )) ? get_post_meta( $order->get_id(), '_billing_cpf', true ) : get_post_meta( $order->get_id(), '_billing_dni', true );
             $data['extra'] = $order->get_id();
+            $data['currency'] = $order->get_currency();
         }
 
         return $data;
@@ -267,7 +268,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
     public function getCurrency()
     {
         $country = woo_payu_latam_sdk_pls()->getDefaultCountry();
-        $currency = ($country == 'CO' && $this->testCheck) ? 'USD' : $this->currency;
+        $currency = ($country == 'CO' && $this->testCheck) ? 'USD' : $this->dataPayment['currency'];
 
         return $currency;
     }
@@ -474,7 +475,7 @@ class Payu_Latam_SDK_PLS extends WC_Payment_Payu_Latam_SDK_PLS
                 } elseif ($response->transactionResponse->state == "PENDING") {
                     $transactionId = $response->transactionResponse->transactionId;
                     $this->saveTransactionId($order->get_id(), $transactionId);
-                    $order->update_status('on-hold');
+                    $order->update_status('pending');
                     $order->add_order_note(sprintf(__('Pending approval: %s (Transaction ID: %s)',
                         'woo-payu-latam-sdk'), $response->transactionResponse->pendingReason, $transactionId));
 
