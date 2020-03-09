@@ -113,6 +113,9 @@
                     name: payu_latam_sdk_pls.placeholdersName,
                     expiry: '••/••••',
                     cvc: '•••'
+                },
+                messages: {
+                    monthYear: 'mm/aa'
                 }
             });
         }
