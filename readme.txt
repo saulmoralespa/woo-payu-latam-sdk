@@ -2,10 +2,10 @@
 Contributors: saulmorales
 Donate link: https://saulmoralespa.com/
 Tags: commerce, e-commerce, commerce, wordpress ecommerce, store, sales, sell, shop, shopping, cart, checkout, configurable, payu, latam, Argentina, Brasil, Colombia, México, Panamá, Perú
-Requires at least: 5.0
-Tested up to: 5.3
+Requires at least: 5.3
+Tested up to: 5.4
 Requires PHP: 7.1.0
-Stable tag: 1.0.16
+Stable tag: 1.0.17
 License: GNU General Public License v3.0
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -73,6 +73,8 @@ Si. But it is advisable that you consider using it since it is revealing for bro
 * Updated status order payment pending and added currency order
 = 1.0.16 =
 * Updated date translation
+= 1.0.17 =
+* Updated wp compatible version
 
 == Additional Info ==
 **Contribute** [repository on github](https://github.com/saulmoralespa/woo-payu-latam-sdk)
